@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmin Badea</title>
+<meta name="description" content="Cosmin Badea — researcher in AI safety, artificial moral agents, interpretability, and meta-decision-making for AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --text: #1a1a1a;
+    --muted: #5e5e5e;
+    --rule: #e3dfd6;
+    --accent: #7a3a1f;
+    --accent-soft: #a8654b;
+    --serif: 'Crimson Pro', Georgia, 'Times New Roman', serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1814;
+      --text: #ebe6dc;
+      --muted: #a59f93;
+      --rule: #3a352d;
+      --accent: #d49274;
+      --accent-soft: #c2825e;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 6rem;
+  }
+  header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  h1 {
+    font-size: 2.6rem;
+    font-weight: 600;
+    margin: 0 0 0.4rem;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .tagline {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin: 0 0 1.5rem;
+    letter-spacing: 0.01em;
+  }
+  .links {
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+  }
+  .links a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s ease;
+  }
+  .links a:hover {
+    border-bottom-color: var(--accent);
+  }
+  h2 {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin: 3rem 0 1rem;
+  }
+  section:first-of-type h2 { margin-top: 0; }
+  p {
+    margin: 0 0 1.1rem;
+  }
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    transition: border-color 0.15s ease;
+  }
+  a:hover {
+    border-bottom-color: var(--accent);
+  }
+  .pub-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .pub-list li {
+    margin-bottom: 1.4rem;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+  .pub-list li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--accent-soft);
+  }
+  .pub-title {
+    font-style: italic;
+  }
+  .pub-meta {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--muted);
+    display: block;
+    margin-top: 0.2rem;
+  }
+  .role-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .role-list li {
+    margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+  .role-title {
+    font-weight: 500;
+  }
+  .role-org {
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+  footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  @media (max-width: 600px) {
+    body { font-size: 17px; }
+    h1 { font-size: 2rem; }
+    .container { padding: 2.5rem 1.2rem 4rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Cosmin Badea</h1>
+  <p class="tagline">Researcher in AI safety, artificial moral agents, and interpretability. Imperial College London.</p>
+  <div class="links">
+    <a href="mailto:cos@ethicos.co.uk">Email</a>
+    <a href="https://www.linkedin.com/in/cbadea/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a>
+  </div>
+</header>
+
+<section>
+  <h2>About</h2>
+  <p>I have worked on AI since 2014, focusing on value-aligned moral agents, explicit logic-based moral reasoning, interpretability, and meta-decision-making for AI. My research keeps returning to a single problem: we do not yet have good top-down, logic-based, explicitly moral decision-making frameworks that a model can reason through. Nearly everything we use is bottom-up. Closing that gap, in my view, is one of the most consequential open questions in AI safety.</p>
+  <p>I lecture on Contemporary Philosophy and AI at Imperial College London, and previously designed and led the Department of Computing's first AI and Ethics course (2019–2023, 95.45/100 student satisfaction). I am AI &amp; Ethics Lead on two Horizon Europe consortia in personalised cancer prevention (4P-CAN, €5.3M) and early diagnosis (FH-EARLY), and am establishing an Imperial-based research institute on AI in wellbeing and health.</p>
+</section>
+
+<section>
+  <h2>Research interests</h2>
+  <p>Artificial moral agents and value alignment. Extracting and formalising the implicit value structure of AI systems — what I call <em>moral paradigms</em> — through structured, logic-based probing. Interpretability and the interpretation problem. Meta-decision-making for AI (Relevance, Representation, Reasoning). Persona-based evaluation of frontier model behaviour.</p>
+</section>
+
+<section>
+  <h2>Selected publications</h2>
+  <ul class="pub-list">
+    <li>
+      <span class="pub-title">Developing Moral AI to Support Antimicrobial Decision-Making.</span>
+      <span class="pub-meta">Bolton, Badea, Georgiou et al. — Nature Machine Intelligence, 2022.</span>
+    </li>
+    <li>
+      <span class="pub-title">Minimum Levels of Interpretability for Artificial Moral Agents.</span>
+      <span class="pub-meta">Vijayaraghavan &amp; Badea — AI &amp; Ethics, 2024.</span>
+    </li>
+    <li>
+      <span class="pub-title">Building Morality Into an Artificial Agent: First Steps.</span>
+      <span class="pub-meta">Seeamber &amp; Badea — IEEE Intelligent Systems, 2023.</span>
+    </li>
+    <li>
+      <span class="pub-title">Have a Break from Making Decisions, Have a MARS: The Multi-valued Action Reasoning System.</span>
+      <span class="pub-meta">Badea — Lecture Notes in Artificial Intelligence (LNAI), 2022.</span>
+    </li>
+    <li>
+      <span class="pub-title">Establishing Meta-Decision-Making for AI: An Ontology of Relevance, Representation, and Reasoning.</span>
+      <span class="pub-meta">Badea &amp; Gilpin — AAAI Fall Symposium, 2021.</span>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h2>Roles &amp; affiliations</h2>
+  <ul class="role-list">
+    <li>
+      <span class="role-title">Lecturer, Contemporary Philosophy and AI</span>
+      <span class="role-org">Imperial College London — present</span>
+    </li>
+    <li>
+      <span class="role-title">AI &amp; Ethics Lead, 4P-CAN</span>
+      <span class="role-org">Horizon Europe Cancer Mission consortium (€5.3M, 17 partners, 11 countries) — 2023–present</span>
+    </li>
+    <li>
+      <span class="role-title">AI Strategy Lead, FH-EARLY</span>
+      <span class="role-org">Horizon Europe early-diagnosis consortium — present</span>
+    </li>
+    <li>
+      <span class="role-title">Founder &amp; Director</span>
+      <span class="role-org">Ethicos — 2024–present</span>
+    </li>
+    <li>
+      <span class="role-title">Founder &amp; Director, Imperial-based AI in wellbeing/health institute</span>
+      <span class="role-org">In setup, 2025–present</span>
+    </li>
+    <li>
+      <span class="role-title">Co-founder &amp; Acting CEO</span>
+      <span class="role-org">Mișcă-te acasă, digital health platform — 2020–2021</span>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h2>Teaching</h2>
+  <p>Designed, created, and led the first AI and Ethics course in Imperial College London's Department of Computing, 2019–2023. Student satisfaction 95.45/100. The course seeded multiple PhD collaborations and joint publications. Currently lecture on Contemporary Philosophy and AI at Imperial.</p>
+</section>
+
+<section>
+  <h2>Contact</h2>
+  <p>Email: <a href="mailto:cos@ethicos.co.uk">cos@ethicos.co.uk</a><br>
+  Based in London. Open to collaboration and conversation on AI safety, alignment, interpretability, and moral reasoning in AI.</p>
+</section>
+
+<footer>
+  <p>© Cosmin Badea, 2026. Last updated May 2026.</p>
+</footer>
+
+</div>
+</body>
+</html>
