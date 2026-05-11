@@ -1,263 +1,1136 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en-GB">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cosmin Badea</title>
-<meta name="description" content="Cosmin Badea — researcher in AI safety, artificial moral agents, interpretability, and meta-decision-making for AI.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cosmin Badea . AI safety, moral reasoning, interpretability</title>
+<meta name="description" content="Cosmin Badea is an AI safety researcher working on logic-first frameworks for moral reasoning in AI. Imperial College London. Founder, Ethicos.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #fbfaf7;
-    --text: #1a1a1a;
-    --muted: #5e5e5e;
-    --rule: #e3dfd6;
-    --accent: #7a3a1f;
-    --accent-soft: #a8654b;
-    --serif: 'Crimson Pro', Georgia, 'Times New Roman', serif;
-    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+/* ---------- tokens ---------- */
+:root{
+  --paper:        oklch(97.5% 0.006 80);
+  --paper-2:      oklch(95.2% 0.010 80);
+  --paper-3:      oklch(92.0% 0.012 80);
+  --ink:          oklch(20.0% 0.012 60);
+  --ink-2:        oklch(36.0% 0.010 60);
+  --ink-3:        oklch(55.0% 0.008 60);
+  --rule:         oklch(80.0% 0.012 70);
+  --rule-strong:  oklch(60.0% 0.012 70);
+  --accent:       oklch(42.0% 0.135 28);
+  --accent-soft:  oklch(42.0% 0.135 28 / 0.10);
+  --duotone-hi:   var(--paper);
+  --duotone-lo:   oklch(28.0% 0.06 28);
+  --serif:    "Instrument Serif", "Iowan Old Style", "Apple Garamond", Garamond, "Times New Roman", serif;
+  --sans:     "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono:     "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --measure: 64ch;
+  --pad-x: clamp(20px, 5vw, 64px);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:        oklch(14.5% 0.008 60);
+    --paper-2:      oklch(17.5% 0.010 60);
+    --paper-3:      oklch(21.0% 0.012 60);
+    --ink:          oklch(93.0% 0.010 80);
+    --ink-2:        oklch(74.0% 0.008 80);
+    --ink-3:        oklch(54.0% 0.008 80);
+    --rule:         oklch(30.0% 0.010 60);
+    --rule-strong:  oklch(48.0% 0.012 60);
+    --accent:       oklch(72.0% 0.140 30);
+    --accent-soft:  oklch(72.0% 0.140 30 / 0.14);
+    --duotone-hi:   oklch(96% 0.010 80);
+    --duotone-lo:   oklch(20% 0.05 28);
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1a1814;
-      --text: #ebe6dc;
-      --muted: #a59f93;
-      --rule: #3a352d;
-      --accent: #d49274;
-      --accent-soft: #c2825e;
-    }
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--serif);
-    font-size: 19px;
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  .container {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 4rem 1.5rem 6rem;
-  }
-  header {
-    margin-bottom: 3rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid var(--rule);
-  }
-  h1 {
-    font-size: 2.6rem;
-    font-weight: 600;
-    margin: 0 0 0.4rem;
-    letter-spacing: -0.01em;
-    line-height: 1.1;
-  }
-  .tagline {
-    font-family: var(--sans);
-    font-size: 0.95rem;
-    color: var(--muted);
-    margin: 0 0 1.5rem;
-    letter-spacing: 0.01em;
-  }
-  .links {
-    font-family: var(--sans);
-    font-size: 0.92rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.2rem;
-  }
-  .links a {
-    color: var(--accent);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.15s ease;
-  }
-  .links a:hover {
-    border-bottom-color: var(--accent);
-  }
-  h2 {
-    font-family: var(--sans);
-    font-size: 0.78rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--accent);
-    margin: 3rem 0 1rem;
-  }
-  section:first-of-type h2 { margin-top: 0; }
-  p {
-    margin: 0 0 1.1rem;
-  }
-  a {
-    color: var(--accent);
-    text-decoration: none;
-    border-bottom: 1px solid var(--rule);
-    transition: border-color 0.15s ease;
-  }
-  a:hover {
-    border-bottom-color: var(--accent);
-  }
-  .pub-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .pub-list li {
-    margin-bottom: 1.4rem;
-    padding-left: 1.2rem;
-    position: relative;
-  }
-  .pub-list li::before {
-    content: "—";
-    position: absolute;
-    left: 0;
-    color: var(--accent-soft);
-  }
-  .pub-title {
-    font-style: italic;
-  }
-  .pub-meta {
-    font-family: var(--sans);
-    font-size: 0.85rem;
-    color: var(--muted);
-    display: block;
-    margin-top: 0.2rem;
-  }
-  .role-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .role-list li {
-    margin-bottom: 1rem;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.2rem;
-  }
-  .role-title {
-    font-weight: 500;
-  }
-  .role-org {
-    font-family: var(--sans);
-    font-size: 0.88rem;
-    color: var(--muted);
-  }
-  footer {
-    margin-top: 4rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--rule);
-    font-family: var(--sans);
-    font-size: 0.85rem;
-    color: var(--muted);
-  }
-  @media (max-width: 600px) {
-    body { font-size: 17px; }
-    h1 { font-size: 2rem; }
-    .container { padding: 2.5rem 1.2rem 4rem; }
-  }
+}
+/* ---------- base ---------- */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-weight:400;
+  font-size:17px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  font-feature-settings:"ss01","ss02","cv11";
+}
+::selection{background:var(--accent);color:var(--paper)}
+a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule);transition:border-color .2s ease, color .2s ease}
+a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+p{text-wrap:pretty;margin:0 0 1.2em}
+
+/* ---------- layout ---------- */
+.page{max-width:1280px;margin:0 auto;padding:0 var(--pad-x)}
+.bar{height:1px;background:var(--rule);margin:0}
+.bar-strong{height:1px;background:var(--ink);opacity:.55;margin:0}
+
+/* ---------- top nav ---------- */
+.top{
+  display:flex;align-items:baseline;justify-content:space-between;
+  padding:22px 0 18px;
+  border-bottom:1px solid var(--rule);
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+}
+.top .mark{color:var(--ink);letter-spacing:.16em}
+.top nav{display:flex;gap:22px;flex-wrap:wrap;justify-content:flex-end}
+.top nav a{border-bottom:none}
+.top nav a:hover{color:var(--accent)}
+
+/* ---------- hero ---------- */
+.hero{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:48px;
+  padding:64px 0 56px;
+  border-bottom:1px solid var(--rule);
+}
+@media (min-width: 900px){
+  .hero{ grid-template-columns: 1.35fr 0.95fr; gap:80px; padding:96px 0 80px; align-items:end; }
+}
+.hero-eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:28px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;
+}
+.hero-eyebrow .dot{width:4px;height:4px;border-radius:50%;background:var(--accent);display:inline-block}
+.hero h1{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:400;
+  font-size: clamp(52px, 9.4vw, 132px);
+  line-height: .88;
+  letter-spacing: -0.02em;
+  margin: 0 0 32px;
+  color:var(--ink);
+}
+.hero h1 .second{display:block; text-indent: .25em}
+.hero-lede{
+  font-family:var(--serif);
+  font-size: clamp(22px, 2.6vw, 30px);
+  line-height:1.32;
+  max-width: 32ch;
+  color:var(--ink);
+  margin: 0 0 28px;
+}
+.hero-meta{
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;
+  color:var(--ink-2);max-width:42ch;
+}
+.hero-meta strong{color:var(--ink);font-weight:500}
+
+/* portrait */
+.portrait{
+  position:relative;
+  align-self:end;
+  justify-self:end;
+  width:100%;
+  max-width:380px;
+  aspect-ratio: 4 / 5;
+}
+.portrait-frame{
+  position:relative;
+  width:100%;height:100%;
+  overflow:hidden;
+  background:var(--paper-3);
+  filter: grayscale(1) contrast(1.05);
+}
+.portrait-frame::after{
+  content:"";position:absolute;inset:0;
+  background: linear-gradient(180deg, var(--accent-soft), transparent 40%, var(--accent-soft));
+  mix-blend-mode: multiply;
+  pointer-events:none;
+}
+@media (prefers-color-scheme: dark){
+  .portrait-frame::after{ mix-blend-mode: screen; opacity:.65 }
+}
+.portrait img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  object-position: center 18%;
+}
+.portrait-caption{
+  position:absolute; right:0; bottom:-28px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+
+/* ---------- inference-rule glyph ---------- */
+.rule-glyph{
+  display:inline-grid;
+  grid-auto-rows:auto;
+  justify-items:center;
+  font-family:var(--serif);
+  font-style:italic;
+  color:var(--ink);
+  --glyph-size: clamp(15px, 1.6vw, 19px);
+  font-size: var(--glyph-size);
+  line-height: 1.2;
+}
+.rule-glyph .premises{
+  display:flex;gap:1.4em;align-items:baseline;flex-wrap:wrap;justify-content:center;
+  padding: 0 .6em .25em;
+}
+.rule-glyph .premises > span{white-space:nowrap}
+.rule-glyph .bar{
+  position:relative;
+  width:100%;
+  height:0;
+  border-top:1px solid var(--ink);
+}
+.rule-glyph .bar::after{
+  content: attr(data-label);
+  position:absolute;
+  right:-0.6em;
+  top: -0.2em;
+  transform: translate(100%, -50%);
+  font-family:var(--mono);
+  font-style:normal;
+  font-size: .56em;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--accent);
+  white-space:nowrap;
+  padding-left:.5em;
+}
+.rule-glyph .conclusion{
+  padding-top:.28em;
+  font-weight:400;
+}
+.rule-glyph.big{ --glyph-size: clamp(18px, 2vw, 26px); }
+.rule-glyph.small{ --glyph-size: 13px; }
+.rule-glyph .turnstile{color:var(--accent);font-style:normal;padding:0 .15em}
+
+/* signature rule under hero */
+.hero-rule{
+  grid-column: 1 / -1;
+  margin-top: 8px;
+  display:flex;justify-content:flex-start;
+}
+
+/* ---------- sections ---------- */
+section{ padding: 88px 0; border-bottom: 1px solid var(--rule); }
+section:last-of-type{border-bottom:none}
+.sec-grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:32px;
+}
+@media (min-width: 900px){
+  .sec-grid{ grid-template-columns: 200px 1fr; gap:64px; }
+}
+.sec-head{
+  position:sticky; top:24px; align-self:start;
+}
+.sec-num{
+  font-family:var(--mono);
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-3); margin-bottom:8px;
+}
+.sec-title{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:400;
+  font-size: clamp(28px, 3.4vw, 40px);
+  line-height:1.04;
+  letter-spacing:-0.01em;
+  color:var(--ink);
+  margin: 0 0 0;
+}
+.sec-body{ max-width: 68ch; }
+
+/* about prose */
+.prose p{font-size:18px;line-height:1.65;color:var(--ink)}
+.prose p.lede{font-family:var(--serif); font-size: clamp(22px, 2.3vw, 28px); line-height:1.35; color:var(--ink); margin-bottom:1em}
+.prose .dropcap::first-letter{
+  font-family:var(--serif);
+  font-style:italic;
+  float:left;
+  font-size:5.4em;
+  line-height:.86;
+  padding: 0.05em .12em 0 0;
+  color:var(--accent);
+}
+.prose em{ font-family:var(--serif); font-style:italic; color:var(--ink); font-size: 1.06em }
+
+/* interests list */
+.interests{ list-style:none; padding:0; margin:0; display:grid; gap: 0; }
+.interest{
+  display:grid;
+  grid-template-columns: 36px 1fr;
+  gap: 24px;
+  padding: 22px 0;
+  border-top:1px solid var(--rule);
+  align-items:start;
+}
+.interest:last-child{border-bottom:1px solid var(--rule)}
+.interest .ix{
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--ink-3);padding-top:6px;
+}
+.interest h3{
+  font-family:var(--serif); font-style:italic; font-weight:400;
+  font-size: clamp(22px, 2.2vw, 28px);
+  line-height:1.1;
+  margin:0 0 6px;
+}
+.interest p{ margin:0; color:var(--ink-2); max-width: 58ch; }
+.interest.signature h3{ color:var(--accent) }
+.interest.signature .ix{ color:var(--accent) }
+
+/* publications */
+.pubs{ list-style:none;padding:0;margin:0;display:grid;gap:0; }
+.pub{
+  display:grid;
+  grid-template-columns: 60px 1fr auto;
+  gap: 18px 24px;
+  padding: 20px 0;
+  border-top:1px solid var(--rule);
+}
+.pub:last-child{ border-bottom:1px solid var(--rule)}
+.pub .num{ font-family:var(--mono); font-size:11px; letter-spacing:.1em; color:var(--ink-3); padding-top:6px}
+.pub .body{ min-width:0 }
+.pub .title{ font-family:var(--serif); font-size: 22px; line-height:1.25; color:var(--ink); }
+.pub .title em{ font-style:italic }
+.pub .meta{ display:block; font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--ink-2); margin-top:8px; text-transform:uppercase; letter-spacing:.14em }
+.pub .venue{ color:var(--accent) }
+.pub .year{
+  font-family:var(--mono); font-size:11px; color:var(--ink-3); padding-top:6px;
+  letter-spacing:.1em; align-self:start;
+}
+
+/* compact lists (talks/teaching/roles/news) */
+.entries{ list-style:none;padding:0;margin:0; }
+.entry{
+  display:grid;
+  grid-template-columns: 110px 1fr;
+  gap: 18px 28px;
+  padding: 16px 0;
+  border-top:1px solid var(--rule);
+  align-items:baseline;
+}
+.entries .entry:last-child{ border-bottom:1px solid var(--rule)}
+.entry .when{
+  font-family:var(--mono); font-size:11px; letter-spacing:.12em; color:var(--ink-3); text-transform:uppercase;
+}
+.entry .what{ font-size:16px; color:var(--ink); }
+.entry .what em{ font-family:var(--serif); font-style:italic; font-size:1.06em }
+.entry .what .where{ display:block; font-family:var(--mono); font-size:11px; color:var(--ink-2); letter-spacing:.08em; margin-top:4px; text-transform:uppercase; letter-spacing:.12em }
+
+/* contact */
+.nightingale-mark{ display:inline-flex; align-items:center; gap:.4em; color:var(--accent); white-space:nowrap }
+.nightingale-mark svg{ vertical-align:-2px; }
+.nightingale-mark em{ color:var(--ink); font-family:var(--serif); font-style:italic; font-size:1.06em }
+
+.metrics{
+  display:grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--rule);
+  border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+  margin: 28px 0 0; padding:0;
+}
+@media (max-width: 700px){ .metrics{ grid-template-columns: repeat(2, 1fr) } }
+.metric{ position:relative; background: var(--paper); padding: 18px 16px; cursor: help; }
+.metric dt{ font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color: var(--ink-3); margin: 0 0 8px }
+.metric dd{ margin:0; font-family:var(--serif); font-style:italic; font-size: clamp(34px, 4vw, 46px); line-height:1; color: var(--ink) }
+.metric.note dd{ font-size: clamp(20px, 2.2vw, 24px); padding-top: 8px; color: var(--ink-2) }
+.metric .tip{
+  position:absolute; left: 12px; right: 12px; bottom: calc(100% + 8px);
+  background: var(--ink); color: var(--paper);
+  font-family: var(--sans); font-size: 12px; line-height: 1.45; letter-spacing: 0; text-transform: none;
+  padding: 10px 12px;
+  opacity: 0; pointer-events:none; transform: translateY(4px);
+  transition: opacity .18s ease, transform .18s ease;
+  z-index: 4; box-shadow: 0 12px 32px -16px rgba(0,0,0,.5); max-width: 340px;
+}
+.metric .tip em{ font-family:var(--serif); font-style:italic; color:var(--paper) }
+.metric:hover .tip, .metric:focus .tip, .metric:focus-within .tip{ opacity: 1; transform: none }
+
+/* contact (cards) */
+.contact-grid{ display:grid; grid-template-columns: 1fr; gap:24px; }
+@media (min-width: 700px){ .contact-grid{ grid-template-columns: repeat(2, 1fr); gap: 40px } }
+.contact-card{
+  border-top:1px solid var(--rule);
+  padding-top: 18px;
+}
+.contact-card .label{
+  font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3); margin-bottom:6px;
+}
+.contact-card .val{
+  font-family:var(--serif); font-style:italic; font-size: 26px; line-height:1.15;
+}
+.contact-card .val a{ border-bottom-color: transparent }
+.contact-card .val a:hover{ border-bottom-color: var(--accent) }
+
+/* contact form */
+.contact-form{
+  display:block; max-width: 640px;
+  border-top: 1px solid var(--rule-strong);
+  border-bottom: 1px solid var(--rule-strong);
+  padding: 28px 0 24px;
+  margin-bottom: 8px;
+}
+.contact-form .cf-row{ display:block; margin-bottom: 18px; }
+.contact-form .cf-row.two{ display:grid; grid-template-columns:1fr; gap:18px; }
+@media (min-width: 640px){ .contact-form .cf-row.two{ grid-template-columns: 1fr 1fr; gap:22px } }
+.contact-form label > span{
+  display:block; font-family:var(--mono); font-size:10px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--ink-3); margin-bottom:6px;
+}
+.contact-form input,
+.contact-form select,
+.contact-form textarea{
+  width:100%; box-sizing:border-box;
+  background: transparent; color: var(--ink);
+  border: none; border-bottom: 1px solid var(--rule);
+  padding: 6px 0 8px;
+  font: inherit; font-family: var(--serif); font-size: 20px; line-height: 1.4;
+  border-radius: 0;
+  transition: border-color .2s;
+}
+.contact-form textarea{ resize:vertical; min-height: 110px; font-size:18px }
+.contact-form select{ font-style: italic }
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus{ outline:none; border-bottom-color: var(--accent) }
+.contact-form .cf-actions{
+  display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+  margin-top: 10px;
+}
+.contact-form button{
+  background: var(--ink); color: var(--paper);
+  border: none; cursor: pointer;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .22em; text-transform: uppercase;
+  padding: 14px 22px;
+  transition: background .2s;
+}
+.contact-form button:hover{ background: var(--accent) }
+.contact-form .cf-note{
+  font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-3);
+}
+.contact-form .cf-note code{ font-family: var(--mono); color: var(--ink-2) }
+
+/* poetry link */
+.poetry-link{
+  display:inline-flex; align-items:center; gap:6px;
+  font-style: italic; color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+  transition: border-color .2s, color .2s;
+}
+.poetry-link:hover{ color: var(--accent); border-bottom-color: var(--accent) }
+
+/* footer */
+footer{
+  padding: 56px 0 64px;
+  display:grid; gap: 32px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 800px){
+  footer{ grid-template-columns: 1fr auto; align-items:end }
+}
+.colophon{ font-family:var(--mono); font-size:11px; letter-spacing:.1em; color:var(--ink-3); line-height:1.6 }
+.colophon strong{ color:var(--ink-2); font-weight:500 }
+.sig{ display:flex; justify-content:flex-end; padding-right: clamp(70px, 9vw, 120px) }
+@media (max-width: 800px){ .sig{ justify-content:flex-start; padding-right: 90px } }
+
+/* accessibility */
+:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; border-radius:2px }
+
+/* reveal */
+.reveal{ opacity:0; transform: translateY(6px); transition: opacity .9s ease, transform .9s ease; }
+.reveal.in{ opacity:1; transform: none }
+
+/* small refinements */
+@media (max-width: 600px){
+  .pub{ grid-template-columns: 40px 1fr; }
+  .pub .year{ grid-column: 2; padding-top:0 }
+  .entry{ grid-template-columns: 1fr; gap: 4px 0 }
+  .entry .when{ margin-bottom:2px }
+  .portrait{ max-width: 280px; margin-top: 12px }
+}
 </style>
 </head>
 <body>
-<div class="container">
+<div class="page">
 
-<header>
-  <h1>Cosmin Badea</h1>
-  <p class="tagline">Researcher in AI, AI Ethics, AI safety, artificial moral agents, and interpretability. Imperial College London.</p>
-  <div class="links">
-    <a href="mailto:cos@ethicos.co.uk">Email</a>
-    <a href="https://www.linkedin.com/in/cbadea/" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="https://scholar.google.com/citations?user=kdVRQOYAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
-  </div>
-</header>
+  <!-- ============ TOP ============ -->
+  <header class="top" role="banner">
+    <div class="mark">Cosmin Badea</div>
+    <nav aria-label="Primary">
+      <a href="#paradigm">Paradigm</a>
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#publications">Writing</a>
+      <a href="#teaching">Teaching</a>
+      <a href="#roles">Roles</a>
+      <a href="#elsewhere">Elsewhere</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
-<section>
-  <h2>About</h2>
-  <p>I have worked on AI since 2014, focusing on value-aligned moral agents, explicit logic-based moral reasoning, interpretability, and meta-decision-making for AI. My research keeps returning to a single problem: we do not yet have good top-down, logic-based, explicitly moral decision-making frameworks that a model can reason through. Nearly everything we use is bottom-up. Closing that gap, in my view, is one of the most consequential open questions in AI safety.</p>
-  <p>I lecture on Contemporary Philosophy and AI at Imperial College London, and previously designed and led the Department of Computing's first AI and Ethics course (2019–2023, 95.45/100 student satisfaction). I am AI &amp; Ethics Lead on two Horizon Europe consortia in personalised cancer prevention (4P-CAN, €5.3M) and early diagnosis (FH-EARLY), and am establishing an Imperial-based research institute on AI in wellbeing and health.</p>
-</section>
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-labelledby="hero-name">
+    <div>
+      <div class="hero-eyebrow">
+        <span>AI safety</span><span class="dot" aria-hidden="true"></span>
+        <span>moral reasoning</span><span class="dot" aria-hidden="true"></span>
+        <span>decision-making</span><span class="dot" aria-hidden="true"></span>
+        <span>interpretability</span><span class="dot" aria-hidden="true"></span>
+        <span>logic</span>
+      </div>
+      <h1 id="hero-name">Cosmin<span class="second">Badea</span></h1>
+      <p class="hero-lede">I research, lecture, and advise, on AI, decision-making, and ethics, and on value structures we can investigate, implement, and improve.</p>
+      <div class="hero-meta">
+        <strong>Imperial College London</strong> . lecturer<br>
+        <strong>Ethicos AI</strong> . founder and managing director<br>
+        <strong>4P-CAN</strong> &amp; <strong>FH-EARLY</strong> . Chief AI and Ethics Officer, EC-funded consortia
+      </div>
+    </div>
+    <div class="portrait" aria-hidden="true">
+      <div class="portrait-frame">
+        <img id="portrait-img" src="assets/portrait-a.jpg" alt="">
+      </div>
+      <div class="portrait-caption">Plate I . the researcher</div>
+    </div>
+    <div class="hero-rule">
+      <div class="rule-glyph big" role="img" aria-label="An inference rule. From an AI system and structured ethical probes, conclude an explicit, inspectable value structure. Named: moral paradigm.">
+        <div class="premises">
+          <span>an AI system</span>
+          <span>structured ethical probes</span>
+        </div>
+        <div class="bar" data-label="Moral Paradigm"></div>
+        <div class="conclusion">an explicit, inspectable value structure</div>
+      </div>
+    </div>
+  </section>
 
-<section>
-  <h2>Research interests</h2>
-  <p>Artificial moral agents and value alignment. Extracting and formalising the implicit value structure of AI systems — what I call <em>moral paradigms</em> — through structured, logic-based probing. Interpretability and the interpretation problem. Meta-decision-making for AI (Relevance, Representation, Reasoning). Persona-based evaluation of frontier model behaviour.</p>
-</section>
+  <!-- ============ PARADIGM (the signature idea) ============ -->
+  <section id="paradigm" aria-labelledby="paradigm-h">
+    <div class="sec-grid">
+      <div class="sec-head">
+        <div class="sec-num">§ I . The Paradigm</div>
+        <h2 class="sec-title" id="paradigm-h">A working note on what I am doing, and why.</h2>
+      </div>
+      <div class="sec-body prose">
+        <p class="lede">My research keeps returning to one problem. We do not yet have good top-down, logic-based, explicitly moral frameworks that a machine can reason through.</p>
+        <p>Almost everything we currently use is bottom-up. Behaviours shaped by examples, preferences inferred from clicks, refusals trained in by demonstration. That gives us systems whose values we can describe but not interrogate, and whose failure modes are felt before they are understood.</p>
+        <p>I want to close that gap. The direction I am working in, which I call <em>moral paradigms</em>, is to extract the implicit value structure of a model from its responses to structured probes, in a form that is explicit, logic-based, and inspectable by a human. The paradigm is the artefact; the model behaviour is the evidence; the probes are the instrument.</p>
+        <p>The bet is simple. If you can write a model's ethics down, you can argue with it.</p>
+      </div>
+    </div>
+  </section>
 
-<section>
-  <h2>Selected publications</h2>
-  <ul class="pub-list">
-    <li>
-      <span class="pub-title">Developing Moral AI to Support Antimicrobial Decision-Making.</span>
-      <span class="pub-meta">Bolton, Badea, Georgiou et al. — Nature Machine Intelligence, 2022.</span>
-    </li>
-    <li>
-      <span class="pub-title">Minimum Levels of Interpretability for Artificial Moral Agents.</span>
-      <span class="pub-meta">Vijayaraghavan &amp; Badea — AI &amp; Ethics, 2024.</span>
-    </li>
-    <li>
-      <span class="pub-title">Building Morality Into an Artificial Agent: First Steps.</span>
-      <span class="pub-meta">Seeamber &amp; Badea — IEEE Intelligent Systems, 2023.</span>
-    </li>
-    <li>
-      <span class="pub-title">Have a Break from Making Decisions, Have a MARS: The Multi-valued Action Reasoning System.</span>
-      <span class="pub-meta">Badea — Lecture Notes in Artificial Intelligence (LNAI), 2022.</span>
-    </li>
-    <li>
-      <span class="pub-title">Establishing Meta-Decision-Making for AI: An Ontology of Relevance, Representation, and Reasoning.</span>
-      <span class="pub-meta">Badea &amp; Gilpin — AAAI Fall Symposium, 2021.</span>
-    </li>
-  </ul>
-</section>
+  <!-- ============ ABOUT ============ -->
+  <section id="about" aria-labelledby="about-h">
+    <div class="sec-grid">
+      <div class="sec-head">
+        <div class="sec-num">§ II . About</div>
+        <h2 class="sec-title" id="about-h">The shorter version.</h2>
+      </div>
+      <div class="sec-body prose">
+        <p class="dropcap">I have worked on AI since 2014. I am a lecturer in the Department of Computing at Imperial College London, where I designed and led the department's first AI and Ethics course (2019 to 2023, average student satisfaction 95.45 out of 100), and now design and deliver <em>Contemporary Philosophy and Artificial Intelligence</em>.</p>
+        <p>My doctoral research at Imperial, supervised by Professor Marek Sergot (Head of the Section of Logic and Artificial Intelligence), is on value-aligned moral agents and rule-based AI. The thesis is complete and awaiting examination. Before that, MEng Computing at Imperial, First Class with Distinction.</p>
+        <p>I am Chief AI and Ethics Officer on two European Commission consortia, 4P-CAN (€5.3M, personalised oncology, 17 organisations across 11 countries) and FH-EARLY (early diagnosis of familial hypercholesterolaemia, 15 partners across Europe), and the sole AI and ethics lead on several others. In 2024 I founded Ethicos AI, an advisory practice for AI strategy, governance, and responsible deployment in high-stakes settings. I am currently building an Imperial-based research institute on good AI, with a wellbeing focus. Working title, <span class="nightingale-mark"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="11" cy="13" r="7" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="14" cy="11" r="6" fill="var(--paper)"/><circle cx="19" cy="5" r="1.2" fill="currentColor"/></svg><em>Project Nightingale</em></span>.</p>
+        <p>I tend to like work that takes philosophy seriously without losing the ability to ship something a computer can run. Most of the interesting questions live at that join.</p>
+      </div>
+    </div>
+  </section>
 
-<section>
-  <h2>Roles &amp; affiliations</h2>
-  <ul class="role-list">
-    <li>
-      <span class="role-title">Lecturer, Contemporary Philosophy and AI</span>
-      <span class="role-org">Imperial College London — present</span>
-    </li>
-    <li>
-      <span class="role-title">AI &amp; Ethics Lead, 4P-CAN</span>
-      <span class="role-org">Horizon Europe Cancer Mission consortium (€5.3M, 17 partners, 11 countries) — 2023–present</span>
-    </li>
-    <li>
-      <span class="role-title">AI/Ethics Lead, FH-EARLY</span>
-      <span class="role-org">Horizon Europe early-diagnosis consortium — present</span>
-    </li>
-    <li>
-      <span class="role-title">Founder &amp; Director</span>
-      <span class="role-org">Ethicos — 2024–present</span>
-    </li>
-    <li>
-      <span class="role-title">Founder &amp; Director, Imperial-based AI in wellbeing/health institute</span>
-      <span class="role-org">In setup, 2025–present</span>
-    </li>
-    <li>
-      <span class="role-title">Co-founder &amp; Acting CEO</span>
-      <span class="role-org">Mișcă-te acasă, digital health platform — 2020–2021</span>
-    </li>
-  </ul>
-</section>
+  <!-- ============ RESEARCH INTERESTS ============ -->
+  <section id="research" aria-labelledby="research-h">
+    <div class="sec-grid">
+      <div class="sec-head">
+        <div class="sec-num">§ III . Research interests</div>
+        <h2 class="sec-title" id="research-h">Threads I am pulling on.</h2>
+      </div>
+      <div class="sec-body">
+        <ol class="interests">
+          <li class="interest signature">
+            <div class="ix">01</div>
+            <div>
+              <h3>Moral paradigms</h3>
+              <p>Extracting and formalising the implicit value structure of an AI in a way humans can inspect, contest, and improve. The signature line of the work.</p>
+            </div>
+          </li>
+          <li class="interest">
+            <div class="ix">02</div>
+            <div>
+              <h3>Good decision-making (MARS)</h3>
+              <p>MARS, the multi-valued action reasoning system, is a general decision-making framework. I happen to apply it to moral reasoning, but the bones are about reasoning over actions, values, and competing considerations in any high-stakes setting.</p>
+            </div>
+          </li>
+          <li class="interest">
+            <div class="ix">03</div>
+            <div>
+              <h3>Interpretability</h3>
+              <p>Particularly the question of how much interpretability is enough, for whom, and at what cost. Less a tool, more a contract.</p>
+            </div>
+          </li>
+          <li class="interest">
+            <div class="ix">04</div>
+            <div>
+              <h3>Value alignment and rule-based AI</h3>
+              <p>Top-down, logic-first frameworks for machine ethics, including hybrid systems that pair learned components with explicit reasoning. Connected to the Artus and Badea law on scaling and causal power of artificial moral agents.</p>
+            </div>
+          </li>
+          <li class="interest">
+            <div class="ix">05</div>
+            <div>
+              <h3>Meta-decision-making</h3>
+              <p>How AI systems choose among decision procedures, and how that choice itself can be made principled and inspectable. An ontology of relevance, representation, and reasoning.</p>
+            </div>
+          </li>
+          <li class="interest">
+            <div class="ix">06</div>
+            <div>
+              <h3>Philosophy of AI and ethics</h3>
+              <p>The Wittgensteinian, virtue-theoretic, and rule-following questions that sit underneath what we now call alignment. A serious philosophical reading of what these systems are doing.</p>
+            </div>
+          </li>
+          <li class="interest">
+            <div class="ix">07</div>
+            <div>
+              <h3>Artificial moral agents</h3>
+              <p>What it would take, conceptually and computationally, for a machine to count as a moral agent in any non-trivial sense.</p>
+            </div>
+          </li>
+          <li class="interest">
+            <div class="ix">08</div>
+            <div>
+              <h3>AI ethics in clinical practice</h3>
+              <p>Concrete settings where the abstract questions bite. Antimicrobial decision-making, personalised oncology, breaking bad news, and AI in mental health and wellbeing.</p>
+            </div>
+          </li>
+        </ol>
+        <div style="margin-top:32px">
+          <div class="rule-glyph small">
+            <div class="premises">
+              <span>bottom-up behaviour</span>
+              <span>top-down rules</span>
+            </div>
+            <div class="bar" data-label="Hybrid"></div>
+            <div class="conclusion">a system you can argue with</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section>
-  <h2>Teaching</h2>
-  <p>Designed, created, and led the first AI and Ethics course in Imperial College London's Department of Computing, 2019–2023. Student satisfaction 95.45/100. The course seeded multiple PhD collaborations and joint publications. Currently lecture on Contemporary Philosophy and AI at Imperial.</p>
-</section>
+  <!-- ============ PUBLICATIONS ============ -->
+  <section id="publications" aria-labelledby="pubs-h">
+    <div class="sec-grid">
+      <div class="sec-head">
+        <div class="sec-num">§ IV . Selected writing</div>
+        <h2 class="sec-title" id="pubs-h">Some papers I am happy to talk about.</h2>
+      </div>
+      <div class="sec-body">
+        <ol class="pubs">
+          <li class="pub">
+            <div class="num">01</div>
+            <div class="body">
+              <div class="title">Have a break from making decisions, have a MARS. <em>The multi-valued action reasoning system.</em></div>
+              <span class="meta">Badea, sole-authored . <span class="venue">SGAI International Conference on AI (LNAI)</span></span>
+            </div>
+            <div class="year">2022</div>
+          </li>
+          <li class="pub">
+            <div class="num">02</div>
+            <div class="body">
+              <div class="title">Morality, machines, and the interpretation problem. <em>A value-based, Wittgensteinian approach to building moral agents.</em></div>
+              <span class="meta">Badea &amp; Artus . establishes the Artus and Badea law . <span class="venue">SGAI International Conference on AI (LNAI)</span></span>
+            </div>
+            <div class="year">2022</div>
+          </li>
+          <li class="pub">
+            <div class="num">03</div>
+            <div class="body">
+              <div class="title">Developing moral AI to support decision-making about antimicrobial use.</div>
+              <span class="meta">Bolton, Badea, Georgiou, Holmes &amp; Rawson . <span class="venue">Nature Machine Intelligence</span></span>
+            </div>
+            <div class="year">2022</div>
+          </li>
+          <li class="pub">
+            <div class="num">04</div>
+            <div class="body">
+              <div class="title">Minimum levels of interpretability for artificial moral agents.</div>
+              <span class="meta">Vijayaraghavan &amp; Badea . <span class="venue">AI and Ethics</span> 5, 2071–2087</span>
+            </div>
+            <div class="year">2025</div>
+          </li>
+          <li class="pub">
+            <div class="num">05</div>
+            <div class="body">
+              <div class="title">Establishing meta-decision-making for AI. <em>An ontology of relevance, representation, and reasoning.</em></div>
+              <span class="meta">Badea &amp; Gilpin . <span class="venue">AAAI Fall Symposium</span></span>
+            </div>
+            <div class="year">2021</div>
+          </li>
+          <li class="pub">
+            <div class="num">06</div>
+            <div class="body">
+              <div class="title">If our aim is to build morality into an artificial agent, how might we begin to go about doing so?</div>
+              <span class="meta">Seeamber &amp; Badea . <span class="venue">IEEE Intelligent Systems</span></span>
+            </div>
+            <div class="year">2023</div>
+          </li>
+          <li class="pub">
+            <div class="num">07</div>
+            <div class="body">
+              <div class="title">Breaking bad news in the era of artificial intelligence and algorithmic medicine.</div>
+              <span class="meta">Post, Badea, Faisal &amp; Brett . <span class="venue">AI and Ethics</span></span>
+            </div>
+            <div class="year">2022</div>
+          </li>
+          <li class="pub">
+            <div class="num">08</div>
+            <div class="body">
+              <div class="title">Moral exemplars for the virtuous machine. <em>The clinician's role in ethical AI for healthcare.</em></div>
+              <span class="meta">Hindocha &amp; Badea . <span class="venue">AI and Ethics</span></span>
+            </div>
+            <div class="year">2022</div>
+          </li>
+        </ol>
+        <p style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--ink-3);margin-top:22px;text-transform:uppercase">Full list, with preprints, on <a href="https://scholar.google.co.uk/citations?user=kdVRQOYAAAAJ&amp;hl=en" rel="me">Google Scholar</a>.</p>
+        <dl class="metrics" aria-label="Google Scholar metrics">
+          <div class="metric" tabindex="0">
+            <dt>Citations</dt><dd>141</dd>
+            <span class="tip" role="tooltip">Total number of times other papers have cited mine. A coarse measure of how widely the work has been read and used.</span>
+          </div>
+          <div class="metric" tabindex="0">
+            <dt>h-index</dt><dd>8</dd>
+            <span class="tip" role="tooltip">The largest <em>h</em> such that I have <em>h</em> papers each cited at least <em>h</em> times. Rewards consistent impact over a one-off hit.</span>
+          </div>
+          <div class="metric" tabindex="0">
+            <dt>i10-index</dt><dd>7</dd>
+            <span class="tip" role="tooltip">Number of my papers with at least 10 citations each. Google Scholar's measure of how many of my papers have crossed a baseline of community uptake.</span>
+          </div>
+          <div class="metric note" tabindex="0">
+            <dt>As of</dt><dd>May 2026</dd>
+            <span class="tip" role="tooltip">Updated by hand. AI safety and ethics is a smaller, slower-citing field than ML proper, where individuals routinely see thousands. Sadness :(</span>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
 
-<section>
-  <h2>Contact</h2>
-  <p>Email: <a href="mailto:cos@ethicos.co.uk">cos@ethicos.co.uk</a><br>
-  Based in London. Open to collaboration and conversation on AI, AI Ethics, AI safety, alignment, interpretability, and moral reasoning in AI.</p>
-</section>
+  <!-- ============ TEACHING ============ -->
+  <section id="teaching" aria-labelledby="teach-h">
+    <div class="sec-grid">
+      <div class="sec-head">
+        <div class="sec-num">§ V . Teaching</div>
+        <h2 class="sec-title" id="teach-h">In the lecture theatre.</h2>
+      </div>
+      <div class="sec-body">
+        <ul class="entries">
+          <li class="entry">
+            <div class="when">2021–</div>
+            <div class="what"><em>Contemporary Philosophy and Artificial Intelligence.</em> A cross-disciplinary course covering analytic philosophy (meaning, free will, philosophy of language, logic), continental philosophy and phenomenology, ethics, AI, decision-making, and AI ethics. For third- and fourth-year STEM undergraduates.<span class="where">Permanent Lecturer . Imperial College London</span></div>
+          </li>
+          <li class="entry">
+            <div class="when">2019–2023</div>
+            <div class="what"><em>AI and Ethics.</em> Designed and led the Department of Computing's first course on the subject, for MSc AI and PhD students. Topics included rule- and logic-based ethics, interpretability, fairness, and moral agent construction. Average satisfaction 95.45 / 100; audience expanded to multiple UKRI Centres for Doctoral Training.<span class="where">Course Leader &amp; Lecturer . Imperial College London</span></div>
+          </li>
+          <li class="entry">
+            <div class="when">Ongoing</div>
+            <div class="what"><em>Project supervisions</em> translating AI concepts into implemented systems and peer-reviewed papers.<span class="where">Imperial . external</span></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-<footer>
-  <p>© Cosmin Badea, 2026. Last updated May 2026.</p>
-</footer>
+  <!-- ============ ROLES ============ -->
+  <section id="roles" aria-labelledby="roles-h">
+    <div class="sec-grid">
+      <div class="sec-head">
+        <div class="sec-num">§ VI . Roles</div>
+        <h2 class="sec-title" id="roles-h">Where I sit.</h2>
+      </div>
+      <div class="sec-body">
+        <ul class="entries">
+          <li class="entry">
+            <div class="when">2021–</div>
+            <div class="what"><em>Lecturer.</em> Department of Computing, Imperial College London.<span class="where">London</span></div>
+          </li>
+          <li class="entry">
+            <div class="when">2024–</div>
+            <div class="what"><em>Founder and Managing Director.</em> Ethicos AI Ltd. Advisory, coaching (technical, executive, leadership, and strategy), and tutoring on AI, ethics, and responsible deployment in high-stakes settings. Audiences from school-age learners to chief executives.<span class="where">London</span></div>
+          </li>
+          <li class="entry">
+            <div class="when">2023–</div>
+            <div class="what"><em>Chief AI and Ethics Officer.</em> <a href="https://4p-can.eu" rel="noopener">4P-CAN</a>, a €5.3M EC-funded consortium on cancer prevention, with 17 organisations across 11 EU, Western EU, and Balkan countries. Interpretability standards, data governance, and responsible deployment.<span class="where">European Commission, INOMED</span></div>
+          </li>
+          <li class="entry">
+            <div class="when">2023–</div>
+            <div class="what"><em>Chief AI and Ethics Officer.</em> <a href="https://fh-early.eu" rel="noopener">FH-EARLY</a>, an EC-funded initiative on the early diagnosis of familial hypercholesterolaemia, with 15 partners across Europe and beyond. AI and ethics strategy, cross-partner delivery, model validation, and publication roadmap.<span class="where">European Commission, INOMED</span></div>
+          </li>
+          <li class="entry">
+            <div class="when">Ongoing</div>
+            <div class="what"><em>Ethics and data protection lead</em> across CURTAIN, EU-CIP, CAREWAY, and CONSENSUS consortia.<span class="where">European Commission, INOMED</span></div>
+          </li>
+          <li class="entry">
+            <div class="when">2021–</div>
+            <div class="what"><em>Lead Research Fellow.</em> World Ethical Data Forum.</div>
+          </li>
+          <li class="entry">
+            <div class="when">Ongoing</div>
+            <div class="what"><em>Reviewer.</em> AI and Ethics (Springer), Frontiers in Health Services. Steering Committee, AAAI Fall Symposium (COGSAT). Member, Imperial-X (Human-AI).</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NEWS ============ -->
+  <section id="news" aria-labelledby="news-h">
+    <div class="sec-grid">
+      <div class="sec-head">
+        <div class="sec-num">§ VII . News</div>
+        <h2 class="sec-title" id="news-h">A selection from the past year.</h2>
+      </div>
+      <div class="sec-body">
+        <ul class="entries" id="news-list" data-window-months="24">
+          <li class="entry" data-date="2026-05">
+            <div class="when">May 2026</div>
+            <div class="what">New site, new direction. The work has a name: <em>moral paradigms</em>.</div>
+          </li>
+          <li class="entry" data-date="2026-02">
+            <div class="when">Feb 2026</div>
+            <div class="what">Took on AI and ethics roles across CURTAIN, EU-CIP, CAREWAY, and CONSENSUS through INOMED.</div>
+          </li>
+          <li class="entry" data-date="2025-10">
+            <div class="when">Oct 2025</div>
+            <div class="what">Advised for <em>Draftix AI</em> on AI research and strategy.</div>
+          </li>
+          <li class="entry" data-date="2025-09">
+            <div class="when">Sep 2025</div>
+            <div class="what">Paper with Vijayaraghavan on minimum interpretability published in <em>AI and Ethics</em>.</div>
+          </li>
+          <li class="entry" data-date="2024-12">
+            <div class="when">Dec 2024</div>
+            <div class="what">Founded <em>Ethicos AI Ltd</em>.</div>
+          </li>
+        </ul>
+        <p id="news-empty" hidden style="font-family:var(--serif);font-style:italic;font-size:22px;color:var(--ink-2);max-width:48ch">Nothing new to report just now. The work is quieter than the website.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ELSEWHERE (poetry & off-duty) ============ -->
+  <section id="elsewhere" aria-labelledby="elsewhere-h">
+    <div class="sec-grid">
+      <div class="sec-head">
+        <div class="sec-num">§ VIII . Elsewhere</div>
+        <h2 class="sec-title" id="elsewhere-h">Off the page, in another voice.</h2>
+      </div>
+      <div class="sec-body prose">
+        <p>Away from the work, I read romantic literature, debate ideas with anyone who will, listen to a great deal of music, and take a good story however it arrives, in a book, a game, or a friend's telling. I fence, play football, and walk my Samoyed, Icy, who is unimpressed by all of the above.</p>
+        <p>I sometimes write poetry. It tends to be quieter, slower, and sadder than the rest of the page. <a class="poetry-link" href="poetry.html">A small reading, behind a closed door &rarr;</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" aria-labelledby="contact-h">
+    <div class="sec-grid">
+      <div class="sec-head">
+        <div class="sec-num">§ IX . Contact</div>
+        <h2 class="sec-title" id="contact-h">Reach out.</h2>
+      </div>
+      <div class="sec-body">
+        <p style="max-width:54ch;color:var(--ink-2);margin-bottom:36px">I read everything. I am especially interested in conversations with people working on alignment evaluation, interpretability for moral content, and the awkward spaces between philosophy and engineering. I also advise, coach, and tutor, on AI and ethics, for audiences from school-age learners to chief executives. Slow replies are not silence.</p>
+
+        <form class="contact-form" action="https://formsubmit.co/cos@ethicos.co.uk" method="POST" aria-label="Send a message">
+          <input type="hidden" name="_subject" value="cbadea.com . new message">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="true">
+          <input type="hidden" name="_next" value="https://cbadea.com/?sent=1">
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+          <div class="cf-row two">
+            <label><span>Name</span><input name="name" required autocomplete="name"></label>
+            <label><span>Email</span><input type="email" name="email" required autocomplete="email"></label>
+          </div>
+          <label class="cf-row"><span>About</span>
+            <select name="intent">
+              <option>Research collaboration</option>
+              <option>Speaking or invitation</option>
+              <option>Advising or consulting (Ethicos)</option>
+              <option>Coaching or tutoring</option>
+              <option>Press or general</option>
+            </select>
+          </label>
+          <label class="cf-row"><span>Message</span><textarea name="message" rows="5" required></textarea></label>
+          <div class="cf-actions">
+            <button type="submit">Send <span aria-hidden="true">&rarr;</span></button>
+            <span class="cf-note">Sent securely to <code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1d7e726e5d786975747e726e337e72336876">[email&#160;protected]</a></code>. No tracking. No newsletter.</span>
+          </div>
+        </form>
+
+        <div class="contact-grid" style="margin-top:48px">
+          <div class="contact-card">
+            <div class="label">Academic</div>
+            <div class="val"><a href="/cdn-cgi/l/email-protection#1d7e337f7c79787c5d74706d786f747c71337c7e336876"><span class="__cf_email__" data-cfemail="b3d09dd1d2d7d6d2f3dadec3d6c1dad2df9dd2d09dc6d8">[email&#160;protected]</span></a></div>
+          </div>
+          <div class="contact-card">
+            <div class="label">Work inquiries</div>
+            <div class="val"><a href="/cdn-cgi/l/email-protection#20434f536045544849434f530e434f0e554b"><span class="__cf_email__" data-cfemail="d6b5b9a596b3a2bebfb5b9a5f8b5b9f8a3bd">[email&#160;protected]</span></a></div>
+          </div>
+          <div class="contact-card">
+            <div class="label">Imperial profile</div>
+            <div class="val"><a href="https://profiles.imperial.ac.uk/cosmin.badea10" rel="me">profiles.imperial.ac.uk</a></div>
+          </div>
+          <div class="contact-card">
+            <div class="label">Google Scholar</div>
+            <div class="val"><a href="https://scholar.google.co.uk/citations?user=kdVRQOYAAAAJ&amp;hl=en" rel="me">scholar.google.co.uk</a></div>
+          </div>
+          <div class="contact-card">
+            <div class="label">LinkedIn</div>
+            <div class="val"><a href="https://www.linkedin.com/in/cbadea/" rel="me">linkedin.com/in/cbadea</a></div>
+          </div>
+          <div class="contact-card">
+            <div class="label">Ethicos (the firm)</div>
+            <div class="val"><a href="https://ethicos.co.uk" rel="me">ethicos.co.uk</a></div>
+          </div>
+          <div class="contact-card">
+            <div class="label">Curriculum vitae</div>
+            <div class="val"><a href="assets/Cosmin_Badea_CV.pdf" download>download &middot; PDF</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="colophon">
+      <strong>cbadea.com</strong> . built in London, 2026.<br>
+      Set in <em>Instrument Serif</em>, <em>Geist</em>, and <em>JetBrains Mono</em>. Colour and motif by hand.<br>
+      All views my own. No em-dashes were harmed.
+    </div>
+    <div class="sig">
+      <div class="rule-glyph small" aria-hidden="true">
+        <div class="premises">
+          <span>thinking</span>
+          <span>writing</span>
+          <span>building</span>
+        </div>
+        <div class="bar" data-label="CB · 2026"></div>
+        <div class="conclusion">a workable ethics for machines</div>
+      </div>
+    </div>
+  </footer>
 
 </div>
+
+<!-- ===== Tweaks panel (vanilla, edit-mode protocol) ===== -->
+<style>
+  #tweaks-panel{
+    position:fixed; right:18px; bottom:18px; z-index:60;
+    width: 280px;
+    background:var(--paper-2); color:var(--ink);
+    border:1px solid var(--rule-strong);
+    box-shadow: 0 24px 60px -20px rgba(0,0,0,0.35), 0 0 0 1px var(--paper);
+    font-family:var(--mono); font-size:11px; letter-spacing:.06em;
+    padding:14px 16px 16px;
+    display:none;
+  }
+  #tweaks-panel.open{ display:block; }
+  #tweaks-panel header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+  #tweaks-panel h4{ margin:0; font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-2); font-weight:500 }
+  #tweaks-panel button.close{ background:none;border:none;color:var(--ink-3);cursor:pointer;font:inherit;letter-spacing:.1em; padding:0 4px }
+  #tweaks-panel button.close:hover{ color:var(--accent) }
+  .tweak-row{ margin: 12px 0 0; }
+  .tweak-row > .tlabel{ display:block; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-3); margin-bottom:6px }
+  .tweak-row .swatches{ display:flex; gap:6px; flex-wrap:wrap }
+  .swatch{ width:26px; height:26px; border-radius:50%; border:1px solid var(--rule); cursor:pointer; padding:0; transition: transform .15s }
+  .swatch.active{ outline:2px solid var(--ink); outline-offset:2px }
+  .swatch:hover{ transform: scale(1.08) }
+  .seg{ display:flex; border:1px solid var(--rule); }
+  .seg button{ flex:1; background:transparent; color:var(--ink-2); border:none; padding:6px 4px; cursor:pointer; font:inherit; font-size:10px; letter-spacing:.14em; text-transform:uppercase }
+  .seg button.active{ background:var(--ink); color:var(--paper) }
+  .seg button + button{ border-left:1px solid var(--rule) }
+</style>
+<aside id="tweaks-panel" aria-hidden="true">
+  <header>
+    <h4>Tweaks</h4>
+    <button class="close" id="tw-close" aria-label="Close tweaks">close ×</button>
+  </header>
+  <div class="tweak-row">
+    <span class="tlabel">Accent</span>
+    <div class="swatches" id="tw-accent"></div>
+  </div>
+  <div class="tweak-row">
+    <span class="tlabel">Display style</span>
+    <div class="seg" id="tw-display">
+      <button data-v="italic">Italic</button>
+      <button data-v="roman">Roman</button>
+      <button data-v="sans">Sans</button>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <span class="tlabel">Motif</span>
+    <div class="seg" id="tw-motif">
+      <button data-v="rule">Rule</button>
+      <button data-v="network">Network</button>
+      <button data-v="none">None</button>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <span class="tlabel">Density</span>
+    <div class="seg" id="tw-density">
+      <button data-v="editorial">Editorial</button>
+      <button data-v="dense">Dense</button>
+    </div>
+  </div>
+</aside>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Lightweight reveal for glyphs and section heads.
+const io = new IntersectionObserver(entries=>{
+  for (const e of entries) if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);}
+},{rootMargin:"-10% 0px"});
+document.querySelectorAll(".rule-glyph, .sec-head, .hero h1, .hero-lede, .portrait").forEach(el=>{
+  el.classList.add("reveal"); io.observe(el);
+});
+
+// ===== News window: hide entries older than N months, show empty state =====
+(function(){
+  const list = document.getElementById('news-list');
+  if(!list) return;
+  const months = parseInt(list.dataset.windowMonths || '12', 10);
+  const now = new Date();
+  const cutoff = new Date(now.getFullYear(), now.getMonth() - months, 1);
+  let visible = 0;
+  list.querySelectorAll('.entry').forEach(li=>{
+    const d = li.dataset.date;
+    if(!d){ visible++; return; }
+    const [y,m] = d.split('-').map(Number);
+    const dt = new Date(y, (m||1)-1, 1);
+    if(dt < cutoff){ li.hidden = true; } else { visible++; }
+  });
+  if(visible === 0){
+    list.hidden = true;
+    const empty = document.getElementById('news-empty');
+    if(empty) empty.hidden = false;
+  }
+})();
+
+// ===== Tweaks (edit-mode protocol) =====
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accent": "oxblood",
+  "display": "italic",
+  "motif": "rule",
+  "density": "editorial"
+}/*EDITMODE-END*/;
+
+const ACCENTS = {
+  oxblood: { light: 'oklch(42% 0.135 28)', dark: 'oklch(72% 0.14 30)', swatch:'#7a2a1f' },
+  ink:     { light: 'oklch(28% 0.04 260)', dark: 'oklch(72% 0.08 260)', swatch:'#2a3850' },
+  forest:  { light: 'oklch(40% 0.10 150)', dark: 'oklch(72% 0.13 150)', swatch:'#2f6048' },
+  ochre:   { light: 'oklch(54% 0.12 70)',  dark: 'oklch(76% 0.13 75)',  swatch:'#9a6a1f' }
+};
+
+const state = Object.assign({}, TWEAK_DEFAULTS);
+
+function applyAccent(name){
+  const a = ACCENTS[name] || ACCENTS.oxblood;
+  const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+  const v = dark ? a.dark : a.light;
+  document.documentElement.style.setProperty('--accent', v);
+  // soft form
+  document.documentElement.style.setProperty('--accent-soft', v.replace(')', ' / 0.10)').replace('oklch(', 'oklch('));
+}
+function applyDisplay(v){
+  const h1 = document.querySelector('.hero h1');
+  if(!h1) return;
+  h1.style.fontStyle = (v==='italic') ? 'italic' : 'normal';
+  h1.style.fontFamily = (v==='sans') ? 'var(--sans)' : 'var(--serif)';
+  h1.style.letterSpacing = (v==='sans') ? '-0.04em' : '-0.02em';
+  h1.style.textTransform = (v==='sans') ? 'lowercase' : 'none';
+  h1.style.fontWeight = (v==='sans') ? '500' : '400';
+}
+function applyMotif(v){
+  document.querySelectorAll('.rule-glyph').forEach(el=> el.style.display = (v==='rule') ? '' : 'none');
+  let net = document.getElementById('motif-network');
+  if(v==='network'){
+    if(!net){
+      net = document.createElement('div');
+      net.id = 'motif-network';
+      net.style.cssText = 'grid-column:1 / -1; margin-top:8px; display:flex; justify-content:flex-start;';
+      net.innerHTML = networkSVG();
+      const rule = document.querySelector('.hero-rule');
+      if(rule && rule.parentNode) rule.parentNode.insertBefore(net, rule);
+    } else net.style.display = '';
+  } else if(net){ net.style.display = 'none'; }
+}
+function networkSVG(){
+  return `<svg viewBox="0 0 360 90" width="360" height="90" style="max-width:100%;" aria-hidden="true">
+    <g fill="none" stroke="var(--ink)" stroke-width="1">
+      <line x1="20" y1="60" x2="100" y2="30"/><line x1="100" y1="30" x2="180" y2="60"/>
+      <line x1="180" y1="60" x2="260" y2="30"/><line x1="260" y1="30" x2="340" y2="60"/>
+      <line x1="20" y1="60" x2="180" y2="60"/><line x1="180" y1="60" x2="340" y2="60"/>
+      <line x1="100" y1="30" x2="260" y2="30"/>
+    </g>
+    <g fill="var(--paper)" stroke="var(--ink)" stroke-width="1">
+      <circle cx="20" cy="60" r="5"/><circle cx="180" cy="60" r="5"/><circle cx="340" cy="60" r="5"/>
+      <circle cx="100" cy="30" r="5" fill="var(--accent)"/><circle cx="260" cy="30" r="5" fill="var(--accent)"/>
+    </g>
+  </svg>`;
+}
+function applyDensity(v){
+  document.body.style.setProperty('--section-pad', v==='dense' ? '56px' : '88px');
+  document.querySelectorAll('section').forEach(s=> s.style.padding = `var(--section-pad, 88px) 0`);
+}
+
+function renderPanel(){
+  // accent swatches
+  const aw = document.getElementById('tw-accent');
+  aw.innerHTML = '';
+  Object.entries(ACCENTS).forEach(([k,v])=>{
+    const b = document.createElement('button');
+    b.className = 'swatch' + (state.accent===k?' active':'');
+    b.style.background = v.swatch;
+    b.title = k;
+    b.onclick = ()=> set('accent', k);
+    aw.appendChild(b);
+  });
+  ['tw-display','tw-motif','tw-density'].forEach(id=>{
+    const key = id.replace('tw-','');
+    document.querySelectorAll('#'+id+' button').forEach(btn=>{
+      btn.classList.toggle('active', btn.dataset.v === state[key]);
+      btn.onclick = ()=> set(key, btn.dataset.v);
+    });
+  });
+}
+function set(k, v){
+  state[k] = v;
+  applyAll();
+  renderPanel();
+  try{ window.parent.postMessage({type:'__edit_mode_set_keys', edits:{[k]:v}}, '*'); }catch(e){}
+}
+function applyAll(){
+  applyAccent(state.accent);
+  applyDisplay(state.display);
+  applyMotif(state.motif);
+  applyDensity(state.density);
+}
+
+const panel = document.getElementById('tweaks-panel');
+window.addEventListener('message', e=>{
+  const d = e.data || {};
+  if(d.type === '__activate_edit_mode'){ panel.classList.add('open'); panel.setAttribute('aria-hidden','false'); renderPanel(); }
+  if(d.type === '__deactivate_edit_mode'){ panel.classList.remove('open'); panel.setAttribute('aria-hidden','true'); }
+});
+document.getElementById('tw-close').onclick = ()=>{
+  panel.classList.remove('open'); panel.setAttribute('aria-hidden','true');
+  try{ window.parent.postMessage({type:'__edit_mode_dismissed'}, '*'); }catch(e){}
+};
+try{ window.parent.postMessage({type:'__edit_mode_available'}, '*'); }catch(e){}
+applyAll();
+</script>
 </body>
 </html>

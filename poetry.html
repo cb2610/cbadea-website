@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cosmin Badea . poetry</title>
+<meta name="description" content="A small selection of poems by Cosmin Badea.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:   #efe9e2;
+  --paper-2: #e7e0d6;
+  --ink:     #1a1716;
+  --ink-2:   #4a423d;
+  --ink-3:   #7a7068;
+  --rule:    #c9bfb3;
+  --accent:  oklch(42% 0.12 28);
+  --serif: "Instrument Serif", "Iowan Old Style", Garamond, "Times New Roman", serif;
+  --sans:  "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:   #0b0a09;
+    --paper-2: #11100e;
+    --ink:     #e8e2d8;
+    --ink-2:   #b8aea0;
+    --ink-3:   #7a6f63;
+    --rule:    #2a2522;
+    --accent:  oklch(72% 0.13 30);
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:var(--accent);color:var(--paper)}
+a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule);transition:color .2s, border-color .2s}
+a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* ---- vignette / paper grain (subtle) ---- */
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(ellipse at 50% 0%, transparent 0%, rgba(0,0,0,0.08) 80%, rgba(0,0,0,0.18) 100%),
+    radial-gradient(ellipse at 50% 100%, transparent 0%, rgba(0,0,0,0.10) 80%, rgba(0,0,0,0.22) 100%);
+  mix-blend-mode: multiply;
+}
+@media (prefers-color-scheme: dark){
+  body::before{
+    background:
+      radial-gradient(ellipse at 50% 0%, transparent 0%, rgba(0,0,0,0.5) 90%),
+      radial-gradient(ellipse at 50% 100%, transparent 0%, rgba(0,0,0,0.6) 90%);
+    mix-blend-mode: normal;
+  }
+}
+
+/* ---- chrome ---- */
+.top{
+  position:relative; z-index:2;
+  max-width: 980px; margin:0 auto;
+  display:flex; align-items:baseline; justify-content:space-between;
+  padding: 24px clamp(20px, 5vw, 56px) 18px;
+  font-family: var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3);
+}
+.top a{border:none}
+.top a:hover{color:var(--accent)}
+.top .mark{color:var(--ink); letter-spacing:.18em}
+
+main{
+  position:relative; z-index:1;
+  max-width: 760px; margin: 0 auto;
+  padding: 56px clamp(20px, 5vw, 56px) 96px;
+}
+
+/* ---- masthead ---- */
+.masthead{
+  text-align: center; margin: 24px 0 60px;
+}
+.masthead .kicker{
+  font-family: var(--mono); font-size: 11px; letter-spacing:.32em; text-transform: uppercase; color: var(--ink-3);
+  margin-bottom: 22px;
+}
+.masthead h1{
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: clamp(56px, 11vw, 120px);
+  line-height: .9; margin: 0; letter-spacing: -0.01em;
+}
+.masthead .note{
+  font-family: var(--serif); font-style: italic; font-size: 19px; color: var(--ink-2);
+  max-width: 46ch; margin: 28px auto 0; line-height: 1.45;
+}
+.rule-mark{
+  display:flex; align-items:center; justify-content:center; gap:14px;
+  margin: 44px 0 0;
+}
+.rule-mark .line{ flex:0 0 80px; height:1px; background: var(--ink-3); opacity:.6 }
+.rule-mark .gl{ font-family: var(--serif); font-style: italic; color: var(--ink-3); font-size: 22px; letter-spacing: .12em }
+
+/* ---- door (closed by default) ---- */
+.door{
+  margin: 36px auto 0; max-width: 520px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 22px 0;
+  text-align: center;
+}
+.door p{
+  font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--ink-2);
+  margin: 0 0 16px; line-height: 1.45;
+}
+.door button{
+  background: transparent; color: var(--ink);
+  border: 1px solid var(--ink); border-radius: 0;
+  padding: 12px 26px; cursor: pointer;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+  transition: background .2s, color .2s;
+}
+.door button:hover{ background: var(--ink); color: var(--paper) }
+
+/* ---- the reading ---- */
+.reading{ margin-top: 64px; }
+.reading[hidden]{ display:none }
+
+.poem{
+  margin: 0 auto 96px;
+  max-width: 560px;
+  opacity: 0; transform: translateY(8px);
+  animation: rise 1.2s ease-out forwards;
+}
+@keyframes rise{ to { opacity:1; transform: none } }
+
+.poem .meta{
+  display:flex; align-items:baseline; justify-content:space-between;
+  font-family: var(--mono); font-size: 10px; letter-spacing:.22em; text-transform: uppercase;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 8px;
+  margin-bottom: 28px;
+}
+.poem .meta .num{ color: var(--ink-2) }
+.poem h2{
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: clamp(36px, 6vw, 56px); line-height: 1; letter-spacing: -0.01em;
+  margin: 0 0 36px; text-align: center;
+}
+.poem .body{
+  font-family: var(--serif);
+  font-size: clamp(19px, 2.1vw, 22px);
+  line-height: 1.7;
+  color: var(--ink);
+  text-align: left;
+}
+.poem .body .stanza{ margin: 0 0 1.4em }
+.poem .body .line{ display:block }
+.poem .body .line.indent-1{ padding-left: 1.5em }
+.poem .body .line.quiet{ color: var(--ink-2); font-style: italic }
+.poem .body em{ font-style: italic }
+.poem .body .speaker{
+  display:block; margin-top: 1.8em; font-family: var(--serif); font-style: italic;
+  color: var(--ink-2); font-size: 0.95em;
+}
+.poem .body .epigraph-open,
+.poem .body .epigraph-close{
+  font-family: var(--serif); font-style: italic; color: var(--ink-3);
+}
+.poem .ornament{
+  text-align:center; color: var(--ink-3); margin-top: 36px;
+  font-family: var(--serif); font-style: italic; font-size: 18px; letter-spacing: .24em;
+}
+
+/* ---- foot ---- */
+.coda{
+  margin: 80px auto 0; max-width: 520px; text-align: center;
+  font-family: var(--serif); font-style: italic; color: var(--ink-3); font-size: 17px;
+  border-top: 1px solid var(--rule); padding-top: 28px;
+}
+.coda a{ border-bottom-color: var(--rule) }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a href="index.html" class="mark">&larr; Cosmin Badea</a>
+  <span>Poetry &middot; private wing</span>
+</header>
+
+<main>
+
+  <section class="masthead">
+    <div class="kicker">A small reading</div>
+    <h1>The quieter room.</h1>
+    <p class="note">A few poems, kept here behind a door, for anyone who would like to read them. They tend toward the dark. If that is not what you came for, the way back is at the top.</p>
+    <div class="rule-mark" aria-hidden="true">
+      <div class="line"></div>
+      <div class="gl">&sect;</div>
+      <div class="line"></div>
+    </div>
+  </section>
+
+  <div class="door" id="door">
+    <p>Open the door?</p>
+    <button id="open-door" type="button" aria-controls="reading" aria-expanded="false">Begin the reading</button>
+  </div>
+
+  <section class="reading" id="reading" hidden>
+
+    <article class="poem" id="poem-1" aria-labelledby="p1-title">
+      <div class="meta"><span class="num">No. 1</span><span>25 April 2014</span></div>
+      <h2 id="p1-title">Always</h2>
+      <div class="body">
+        <p class="stanza epigraph-open">&ldquo;</p>
+
+        <p class="stanza">
+          <span class="line">You were the air that filled my soul</span>
+          <span class="line">Whenever I would draw a breath</span>
+          <span class="line">The echo of my every thought</span>
+          <span class="line">Goddess of endless nightly depth</span>
+        </p>
+
+        <p class="stanza">
+          <span class="line">You were the light behind the Sun</span>
+          <span class="line">Source of his flaming cry of red</span>
+          <span class="line">To shield our fragile hearts from you</span>
+          <span class="line">He burns forever in our stead.</span>
+        </p>
+
+        <p class="stanza">
+          <span class="line">You left and drowned my empty soul</span>
+          <span class="line">The black filled up my chest</span>
+          <span class="line">Cold ghosts now haunt my tortured mind</span>
+          <span class="line">Each night a death, at best.</span>
+        </p>
+
+        <p class="stanza">
+          <span class="line">The sun froze first that final night</span>
+          <span class="line">My heart was next to die</span>
+          <span class="line">The gears of time ground to a halt</span>
+          <span class="line">Hope, pale as fallen snow,</span>
+          <span class="line">Whispered &ldquo;Goodbye&rdquo;.</span>
+        </p>
+
+        <p class="stanza">
+          <span class="line">A thousand years I sought for you</span>
+          <span class="line">Inside your dark and empty heart</span>
+          <span class="line">But now my breath is slowing and</span>
+          <span class="line">I fear I must depart.&rdquo;</span>
+        </p>
+
+        <p class="stanza speaker">
+          <span class="line">Thus whispered softly the old man</span>
+          <span class="line">Eyes full of fallen flakes of snow</span>
+          <span class="line">His fist squeezed hard the blade of glass</span>
+          <span class="line">And then let go.</span>
+        </p>
+
+        <p class="stanza">
+          <span class="line">A thousand miles behind black walls</span>
+          <span class="line">She heard the wind whisper his name</span>
+          <span class="line">A quick thought back to fields of gold</span>
+          <span class="line">And then the pain.</span>
+        </p>
+      </div>
+      <div class="ornament" aria-hidden="true">&sect;</div>
+    </article>
+
+    <div class="coda">
+      That is all for now. More will be added, slowly. <a href="index.html">Return to the main page</a>.
+    </div>
+
+  </section>
+
+</main>
+
+<script>
+  (function(){
+    var btn = document.getElementById('open-door');
+    var reading = document.getElementById('reading');
+    var door = document.getElementById('door');
+    btn.addEventListener('click', function(){
+      reading.hidden = false;
+      btn.setAttribute('aria-expanded','true');
+      door.style.display = 'none';
+      // gentle scroll into the room
+      window.setTimeout(function(){
+        reading.scrollIntoView({behavior:'smooth', block:'start'});
+      }, 60);
+    });
+  })();
+</script>
+
+</body>
+</html>
