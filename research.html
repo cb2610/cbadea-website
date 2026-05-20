@@ -1,0 +1,1038 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cosmin Badea . research and papers</title>
+<meta name="description" content="Selected papers by Cosmin Badea on moral reasoning in AI, decision-making, interpretability, and value alignment.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:        oklch(97.5% 0.006 80);
+  --paper-2:      oklch(95.2% 0.010 80);
+  --paper-3:      oklch(92.0% 0.012 80);
+  --ink:          oklch(20.0% 0.012 60);
+  --ink-2:        oklch(36.0% 0.010 60);
+  --ink-3:        oklch(55.0% 0.008 60);
+  --rule:         oklch(80.0% 0.012 70);
+  --rule-strong:  oklch(60.0% 0.012 70);
+  --accent:       oklch(42.0% 0.135 28);
+  --accent-soft:  oklch(42.0% 0.135 28 / 0.14);
+  --serif: "Instrument Serif", "Iowan Old Style", Garamond, serif;
+  --sans:  "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:        oklch(14.5% 0.008 60);
+    --paper-2:      oklch(17.5% 0.010 60);
+    --paper-3:      oklch(21.0% 0.012 60);
+    --ink:          oklch(93.0% 0.010 80);
+    --ink-2:        oklch(74.0% 0.008 80);
+    --ink-3:        oklch(54.0% 0.008 80);
+    --rule:         oklch(30.0% 0.010 60);
+    --rule-strong:  oklch(48.0% 0.012 60);
+    --accent:       oklch(72.0% 0.140 30);
+    --accent-soft:  oklch(72.0% 0.140 30 / 0.18);
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--sans); font-size:17px; line-height:1.55;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+::selection{background:var(--accent);color:var(--paper)}
+a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule);transition:border-color .2s, color .2s}
+a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+p{text-wrap:pretty;margin:0 0 1.2em}
+
+.page{max-width:1180px;margin:0 auto;padding:0 clamp(20px, 5vw, 56px)}
+
+/* top nav */
+.top{
+  display:flex; align-items:baseline; justify-content:space-between;
+  padding:22px 0 18px; border-bottom:1px solid var(--rule);
+  font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-2);
+}
+.top a{border:none}
+.top a:hover{color:var(--accent)}
+.top .mark{color:var(--ink); letter-spacing:.18em}
+
+/* masthead */
+.masthead{ padding: 72px 0 48px; }
+.masthead .kicker{
+  font-family: var(--mono); font-size:11px; letter-spacing:.22em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 18px;
+}
+.masthead h1{
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: clamp(48px, 8vw, 96px); line-height: .92; letter-spacing: -0.02em;
+  margin: 0 0 24px; max-width: 18ch;
+}
+.masthead .lede{
+  font-family: var(--serif); font-size: clamp(20px, 2.2vw, 24px); line-height:1.4;
+  color: var(--ink-2); max-width: 56ch; margin:0;
+}
+
+/* metrics strip */
+.metrics{
+  display:grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--rule);
+  border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+  margin: 32px 0 0;
+}
+@media (max-width: 700px){ .metrics{ grid-template-columns: repeat(2, 1fr) } }
+.metric{ position:relative; background: var(--paper); padding: 18px 18px; cursor: help; }
+.metric dt{ font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color: var(--ink-3); margin: 0 0 8px }
+.metric dd{ margin:0; font-family:var(--serif); font-style:italic; font-size: clamp(34px, 4vw, 46px); line-height:1; color: var(--ink) }
+.metric.note dd{ font-size: clamp(20px, 2.2vw, 24px); padding-top: 8px; color: var(--ink-2) }
+.metric .tip{
+  position:absolute; left: 12px; right: 12px; bottom: calc(100% + 8px);
+  background: var(--ink); color: var(--paper);
+  font-family: var(--sans); font-size: 12px; line-height: 1.45; padding: 10px 12px;
+  opacity: 0; pointer-events:none; transform: translateY(4px);
+  transition: opacity .18s ease, transform .18s ease;
+  z-index: 4; box-shadow: 0 12px 32px -16px rgba(0,0,0,.5); max-width: 340px;
+}
+.metric:hover .tip, .metric:focus-within .tip{ opacity: 1; transform: none }
+
+/* TIMELINE */
+.timeline{
+  position:relative; margin: 56px 0 0; padding: 36px 0 28px;
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  overflow:hidden;
+}
+.timeline .tl-label{
+  font-family:var(--mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+  color: var(--ink-3); margin-bottom: 28px;
+}
+.tl-svg{ display:block; width:100%; height: 200px; }
+.tl-axis{ stroke: var(--ink-3); stroke-width: 1; opacity:.5 }
+.tl-tick{ font-family: var(--mono); font-size: 11px; fill: var(--ink-3); letter-spacing: .14em }
+.tl-line{ stroke: var(--ink); stroke-width: 1; opacity:.18 }
+.tl-tooltip{
+  position:absolute; pointer-events:none;
+  background: var(--ink); color: var(--paper);
+  font-family: var(--sans); font-size: 12px; line-height: 1.4; padding: 8px 12px;
+  max-width: 280px; opacity: 0; transform: translate(-50%, -100%);
+  transition: opacity .15s; z-index: 5; box-shadow: 0 12px 32px -16px rgba(0,0,0,.6);
+}
+.tl-tooltip strong{ font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 14px }
+
+/* filter */
+.filters{
+  display:flex; gap: 8px; flex-wrap:wrap; padding: 24px 0;
+  font-family: var(--mono); font-size: 11px; letter-spacing:.14em; text-transform: uppercase;
+  border-bottom:1px solid var(--rule);
+}
+.filters .label{ color: var(--ink-3); padding: 6px 8px 6px 0; align-self:center }
+.filters button{
+  background: transparent; color: var(--ink-2); border:1px solid var(--rule);
+  padding: 6px 12px; cursor:pointer; font: inherit;
+}
+.filters button:hover{ color: var(--ink); border-color: var(--ink-3) }
+.filters button.active{ background: var(--ink); color: var(--paper); border-color: var(--ink) }
+
+/* "core programme" callout */
+.programme-callout{
+  margin: 32px 0 0;
+  padding: 20px 22px;
+  border-left: 3px solid var(--accent);
+  background: var(--paper-2);
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(17px, 1.8vw, 20px); color: var(--ink-2);
+  max-width: 78ch;
+}
+.programme-callout strong{ color: var(--ink); font-style: normal; font-family: var(--sans); font-weight: 500; font-size: .85em; letter-spacing:.06em; text-transform: uppercase; display:block; margin-bottom: 6px }
+
+/* papers */
+.papers{ padding: 24px 0 60px; }
+.paper{
+  display:grid;
+  grid-template-columns: 64px 1fr;
+  gap: 18px 32px;
+  padding: 40px 0;
+  border-top: 1px solid var(--rule);
+  scroll-margin-top: 20px;
+  transition: background .25s;
+}
+.paper.flash{ background: var(--accent-soft) }
+.paper:last-child{ border-bottom: 1px solid var(--rule) }
+.paper.hidden{ display:none }
+@media (min-width: 980px){
+  .paper{ grid-template-columns: 80px minmax(0, 1.5fr) minmax(280px, 1fr); }
+}
+
+/* side column */
+.paper .side{
+  display:flex; flex-direction: column; gap: 22px;
+  border-top: 1px solid var(--rule);
+  padding-top: 20px;
+}
+@media (min-width: 980px){
+  .paper .side{ border-top: none; padding-top: 0; border-left: 1px solid var(--rule); padding-left: 28px }
+}
+.paper .side .actions{
+  display:flex; flex-wrap: wrap; gap: 10px 18px;
+  padding-bottom: 16px; border-bottom: 1px solid var(--rule);
+}
+.paper .side .actions a{
+  font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  border-bottom: 1px solid var(--rule); padding-bottom: 2px;
+}
+.paper .side .actions a.primary{ color: var(--accent); border-bottom-color: var(--accent) }
+.paper .side .actions a:hover{ color: var(--accent); border-bottom-color: var(--accent) }
+
+/* legacy: hide old radar-wrap if any sneak in */
+.paper .radar-wrap{ display:none }
+
+.paper .num{
+  font-family: var(--mono); font-size: 12px; letter-spacing:.16em; color: var(--ink-3);
+  padding-top: 14px;
+}
+.paper.core .num{ color: var(--accent) }
+.paper .main{ min-width: 0 }
+
+.paper .core-badge{
+  display:inline-block;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--accent); border: 1px solid var(--accent); padding: 4px 8px;
+  margin-bottom: 14px;
+}
+
+.paper h2{
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: clamp(28px, 3vw, 38px); line-height: 1.1; letter-spacing: -0.01em;
+  margin: 0 0 6px; color: var(--ink);
+}
+.paper .short{
+  font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ink-3); margin: 0 0 12px;
+}
+.paper .short b{ color: var(--ink-2); font-weight: 500 }
+.paper .role{
+  font-family: var(--serif); font-style: italic; color: var(--accent); font-size: 18px;
+  margin: 0 0 14px;
+}
+.paper .meta{
+  font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-3); margin: 0 0 16px;
+}
+.paper .meta .venue{ color: var(--ink-2) }
+.paper .tagline{
+  font-family: var(--serif); font-size: clamp(18px, 1.9vw, 21px); line-height: 1.45;
+  color: var(--ink); max-width: 56ch; margin: 0 0 4px;
+}
+.paper .tags{
+  display:flex; gap: 6px; flex-wrap: wrap; margin: 18px 0 0;
+}
+.paper .tag{
+  font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-3); border:1px solid var(--rule); padding: 4px 8px;
+}
+
+/* side: year + cites + actions */
+.paper .side{
+  display:flex; flex-direction: column; gap: 18px;
+  border-top: 1px solid var(--rule);
+  padding-top: 18px;
+}
+@media (min-width: 980px){
+  .paper .side{ border-top: none; padding-top: 0; border-left: 1px solid var(--rule); padding-left: 24px; }
+}
+.paper .yr-row{
+  display:flex; align-items: baseline; justify-content: space-between; gap: 14px;
+}
+.paper .year{
+  font-family: var(--serif); font-style: italic; font-size: 40px; color: var(--ink); line-height: 1;
+}
+.paper .year .conceived{
+  display:block; font-family: var(--mono); font-size: 9px; letter-spacing:.14em;
+  text-transform: uppercase; color: var(--ink-3); font-style: normal; margin-top: 6px;
+}
+.paper .cites{
+  font-family: var(--mono); font-size: 10px; letter-spacing:.14em; text-transform: uppercase;
+  color: var(--ink-3); text-align: right;
+}
+.paper .cites strong{
+  display:block;
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  color: var(--accent); font-size: 28px; letter-spacing: 0; text-transform: none;
+}
+
+/* ratings */
+.ratings{
+  display:grid; grid-template-columns: 1fr; gap: 8px 14px;
+}
+.rating{ display:grid; grid-template-columns: 1fr auto; gap: 6px 12px; align-items: center; }
+.rating .lbl{
+  font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-3); line-height: 1.2;
+}
+.rating .stars{
+  font-family: var(--serif); font-size: 16px; color: var(--ink-3); letter-spacing: 1px;
+  white-space: nowrap;
+}
+.rating .stars .on{ color: var(--accent) }
+
+/* legacy actions (kept hidden, side has new actions) */
+.paper .main > .actions{ display:none }
+
+/* respond button & inline form */
+.respond{
+  margin-top: 12px;
+  background: transparent; color: var(--ink-2); border: 1px dashed var(--rule-strong);
+  padding: 8px 14px; cursor: pointer;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  transition: color .2s, border-color .2s, background .2s;
+}
+.respond:hover{ color: var(--accent); border-color: var(--accent) }
+.respond[aria-expanded="true"]{ color: var(--paper); background: var(--ink); border-color: var(--ink); border-style: solid }
+.respond-form{ display:none; margin-top: 18px; padding: 18px 0 6px; }
+.paper .respond-form{ border-top: 1px solid var(--rule) }
+.respond-form.open{ display:block }
+.respond-form p.intro{
+  font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--ink-2);
+  max-width: 56ch; margin: 0 0 16px;
+}
+.respond-form .rf-row{ display:block; margin-bottom: 16px }
+.respond-form .rf-row.two{ display:grid; grid-template-columns: 1fr; gap: 16px }
+@media (min-width: 640px){ .respond-form .rf-row.two{ grid-template-columns: 1fr 1fr; gap: 24px } }
+.respond-form label > span{
+  display:block; font-family: var(--mono); font-size: 10px; letter-spacing:.18em;
+  text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px;
+}
+.respond-form input, .respond-form select, .respond-form textarea{
+  width:100%; box-sizing:border-box;
+  background: transparent; color: var(--ink);
+  border: none; border-bottom: 1px solid var(--rule);
+  padding: 8px 0 10px; border-radius: 0;
+  font: inherit; font-family: var(--serif); font-size: 19px; line-height: 1.4;
+  transition: border-color .2s;
+  -webkit-appearance: none; appearance: none;
+}
+.respond-form textarea{ resize: vertical; min-height: 100px; font-size: 18px }
+.respond-form select{ font-style: italic; padding-right: 28px }
+.respond-form input:focus, .respond-form select:focus, .respond-form textarea:focus{ outline:none; border-bottom-color: var(--accent) }
+.respond-form .rf-foot{ display:flex; align-items:center; gap: 20px; flex-wrap: wrap; margin-top: 12px }
+.respond-form button[type="submit"]{
+  background: var(--ink); color: var(--paper);
+  border: none; cursor: pointer;
+  font-family: var(--mono); font-size: 11px; letter-spacing:.22em; text-transform: uppercase;
+  padding: 14px 24px;
+  transition: background .2s;
+}
+.respond-form button[type="submit"]:hover{ background: var(--accent) }
+.respond-form .note{ font-family: var(--mono); font-size: 10px; letter-spacing: .04em; color: var(--ink-3) }
+.respond-form .note code{ font-family: var(--mono); color: var(--ink-2) }
+
+/* invitation block */
+.invitation{
+  margin: 64px 0 0;
+  padding: 56px clamp(20px, 4vw, 48px);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  text-align: center;
+}
+.invitation .kicker{
+  font-family: var(--mono); font-size: 11px; letter-spacing: .24em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 22px;
+}
+.invitation h2{
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: clamp(38px, 6vw, 72px); line-height: .96; letter-spacing: -0.01em;
+  margin: 0 auto 22px; max-width: 22ch;
+}
+.invitation p{
+  font-family: var(--serif); font-size: clamp(19px, 1.9vw, 22px); line-height: 1.5;
+  color: var(--ink-2); max-width: 60ch; margin: 0 auto 24px;
+}
+.invitation .inv-actions{
+  display:flex; justify-content:center; gap: 14px; flex-wrap: wrap; margin-top: 28px;
+}
+.invitation .inv-actions a{
+  background: var(--ink); color: var(--paper); border: 1px solid var(--ink);
+  padding: 14px 22px;
+  font-family: var(--mono); font-size: 12px; letter-spacing:.22em; text-transform: uppercase;
+  transition: background .2s, color .2s;
+}
+.invitation .inv-actions a + a{ background: transparent; color: var(--ink) }
+.invitation .inv-actions a:hover{ background: var(--accent); color: var(--paper); border-color: var(--accent) }
+.invitation .future-note{
+  margin-top: 36px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* radar inline (small, under stars) */
+.radar-inline{ display:flex; justify-content:center; margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--rule) }
+.radar-inline .radar-svg{ width: 180px; height: 180px; max-width: 100%; opacity: .95 }
+
+/* radar mode (display modes) */
+body.stars-only .radar-inline{ display:none }
+body.radar-only .ratings{ display:none }
+body.radar-only .radar-inline{ border-top: none; padding-top: 0 }
+body.radar-only .radar-inline .radar-svg{ width: 240px; height: 240px }
+
+/* footer */
+footer{
+  padding: 40px 0 64px; border-top: 1px solid var(--rule);
+  font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--ink-3); line-height: 1.6;
+}
+footer a{ color: var(--ink-2); border-bottom-color: var(--rule) }
+
+:focus-visible{ outline:2px solid var(--accent); outline-offset:3px }
+
+/* tweaks panel */
+#tweaks-panel{
+  position:fixed; right:18px; bottom:18px; z-index:60;
+  width: 240px;
+  background: var(--paper-2); color: var(--ink);
+  border: 1px solid var(--rule-strong);
+  box-shadow: 0 24px 60px -20px rgba(0,0,0,0.35);
+  font-family: var(--mono); font-size: 11px; padding: 14px 16px;
+  display: none;
+}
+#tweaks-panel.open{ display:block }
+#tweaks-panel header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:12px }
+#tweaks-panel h4{ margin:0; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-2); font-weight:500 }
+#tweaks-panel .close{ background:none; border:none; color: var(--ink-3); cursor:pointer; font:inherit; letter-spacing:.1em }
+.tw-row{ margin: 12px 0 0 }
+.tw-row .tlabel{ display:block; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-3); margin-bottom: 6px }
+.seg{ display:flex; border:1px solid var(--rule) }
+.seg button{ flex:1; background:transparent; color:var(--ink-2); border:none; padding:6px 4px; cursor:pointer; font:inherit; font-size:10px; letter-spacing:.14em; text-transform:uppercase }
+.seg button.active{ background: var(--ink); color: var(--paper) }
+.seg button + button{ border-left: 1px solid var(--rule) }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="top">
+    <a href="index.html" class="mark">&larr; Cosmin Badea</a>
+    <span>Research &middot; the papers</span>
+  </header>
+
+  <section class="masthead">
+    <div class="kicker">§ Research</div>
+    <h1>The papers, with somewhere to put them.</h1>
+    <p class="lede">A working selection of my published work on moral reasoning in AI, good decision-making, interpretability, and value alignment. Not sorted by citation count. The first three are the core of the research programme; the rest extend or apply it. Each card carries my own short note, a star line for what kind of paper it is, and links to read it.</p>
+
+    <dl class="metrics" aria-label="Citation metrics">
+      <div class="metric" tabindex="0">
+        <dt>Citations</dt><dd>141</dd>
+        <span class="tip">Total times my papers have been cited (Google Scholar).</span>
+      </div>
+      <div class="metric" tabindex="0">
+        <dt>h-index</dt><dd>8</dd>
+        <span class="tip">The largest <em>h</em> such that I have <em>h</em> papers each cited at least <em>h</em> times.</span>
+      </div>
+      <div class="metric" tabindex="0">
+        <dt>i10-index</dt><dd>7</dd>
+        <span class="tip">Number of my papers with at least 10 citations each.</span>
+      </div>
+      <div class="metric note" tabindex="0">
+        <dt>As of</dt><dd>May 2026</dd>
+        <span class="tip">Updated by hand. AI safety and ethics cites more slowly than ML proper. Sadness :(</span>
+      </div>
+    </dl>
+  </section>
+
+  <section class="timeline" aria-label="Papers timeline" id="timeline-section" hidden>
+    <div class="tl-label">Timeline &middot; circle area approximates citation count &middot; the three accent-rimmed circles are the core programme</div>
+    <svg class="tl-svg" id="tl-svg" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <div id="tl-tooltip" class="tl-tooltip"></div>
+  </section>
+
+  <nav class="filters" id="filters" aria-label="Filter by theme">
+    <span class="label">Filter</span>
+    <button class="active" data-tag="all">All</button>
+    <button data-tag="core">Core programme</button>
+    <button data-tag="mars">MARS &middot; decision-making</button>
+    <button data-tag="interpretability">Interpretability</button>
+    <button data-tag="moral-agents">Moral agents</button>
+    <button data-tag="clinical">Clinical AI</button>
+    <button data-tag="philosophy">Philosophy</button>
+    <button data-tag="consciousness">Consciousness</button>
+  </nav>
+
+  <div class="programme-callout">
+    <strong>The core research programme</strong>
+    The first three papers below sit at the centre of what I am doing. <em>The interpretation problem</em> is the conceptual core, <em>MARS</em> is the formal system, and <em>meta-decision-making</em> is the architecture that holds them together.
+  </div>
+
+  <main class="papers" id="papers"></main>
+
+  <!-- Invitation -->
+  <section class="invitation" aria-label="Thinking with these papers">
+    <div class="kicker">An invitation</div>
+    <h2>Thinking with these papers?</h2>
+    <p>If something here sparked an objection, a question, a related result, a correction, or an idea you want to push further, I would like to hear it. Reactions from researchers, clinicians, students, and curious readers are all welcome. The shorter and sharper the better; long is also fine.</p>
+    <p style="font-size: clamp(16px,1.7vw,18px); color: var(--ink-3); max-width: 56ch">Replies come from a human, slowly. I read everything but cannot promise a response to all of it. If you would prefer to leave a note on a specific paper, each card above has a small &ldquo;respond to this paper&rdquo; link tucked at the foot.</p>
+    <div class="inv-actions">
+      <a href="#invite-form">Write to me</a>
+      <a href="index.html#contact">General contact</a>
+    </div>
+    <p class="future-note">A public discussion space, with moderated comments per paper, is something I would like to add later.</p>
+
+    <form id="invite-form" class="respond-form open" style="max-width: 640px; margin: 56px auto 0; text-align: left; border:none; padding: 0;" action="https://formsubmit.co/cosmin.badea23@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="cbadea.com . a thought on the research">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="true">
+      <input type="hidden" name="_next" value="https://cbadea.com/research.html?sent=1">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="context" value="Invitation (general)">
+      <div class="rf-row two">
+        <label><span>Name</span><input name="name" required></label>
+        <label><span>Email</span><input type="email" name="email" required></label>
+      </div>
+      <label class="rf-row"><span>Kind of thought</span>
+        <select name="kind">
+          <option>Comment or reaction</option>
+          <option>Criticism or pushback</option>
+          <option>Future-work idea</option>
+          <option>Question</option>
+          <option>Correction</option>
+          <option>Collaboration proposal</option>
+        </select>
+      </label>
+      <label class="rf-row"><span>The thought</span><textarea name="message" rows="5" required placeholder="Even a paragraph is enough. Citations welcome but not required."></textarea></label>
+      <div class="rf-foot">
+        <button type="submit">Send &rarr;</button>
+        <span class="note">Sent privately to my research inbox.</span>
+      </div>
+    </form>
+  </section>
+
+  <!-- Timeline (bottom) -->
+  <section class="timeline" aria-label="Papers timeline" id="timeline-bottom" style="margin-top: 24px">
+    <div class="tl-label">Timeline &middot; circle area approximates citation count &middot; the three accent-rimmed circles are the core programme</div>
+    <svg class="tl-svg" id="tl-svg-bottom" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <div id="tl-tooltip-bottom" class="tl-tooltip"></div>
+  </section>
+
+  <footer>
+    Full list of publications and live citation counts on
+    <a href="https://scholar.google.co.uk/citations?user=kdVRQOYAAAAJ&amp;hl=en" rel="me" target="_blank">Google Scholar</a>.
+    Star ratings reflect my own assessment of each paper; citations are Google Scholar, last checked May 2026.
+    &middot; <a href="index.html">Return to the main page</a>.
+  </footer>
+
+</div>
+
+<!-- Tweaks panel -->
+<aside id="tweaks-panel" aria-hidden="true">
+  <header>
+    <h4>Tweaks</h4>
+    <button class="close" id="tw-close" aria-label="Close">close ×</button>
+  </header>
+  <div class="tw-row">
+    <span class="tlabel">Ratings display</span>
+    <div class="seg" id="tw-rate">
+      <button data-v="stars">Stars</button>
+      <button data-v="both" class="active">Both</button>
+      <button data-v="radar">Radar</button>
+    </div>
+  </div>
+  <div class="tw-row">
+    <span class="tlabel">Order</span>
+    <div class="seg" id="tw-order">
+      <button data-v="programme" class="active">Programme</button>
+      <button data-v="cites">Citations</button>
+      <button data-v="year">Year</button>
+    </div>
+  </div>
+</aside>
+
+<script>
+// ============================================================
+// PAPERS DATA
+// ============================================================
+const PAPERS = [
+  {
+    id: 'interpretation',
+    short: 'The Interpretation Problem',
+    title: 'Morality, machines, and the interpretation problem.',
+    subtitle: 'A value-based, Wittgensteinian approach to building moral agents.',
+    authors: 'Cosmin Badea & Gregory Artus',
+    venue: 'SGAI-AI 2022 / LNCS',
+    year: 2022, conceived: 2018,
+    cites: 11, core: true,
+    role: 'Foundational theory.',
+    tagline: 'The conceptual core of my research programme: why rules alone cannot determine moral machine behaviour. Establishes the Artus and Badea law on scaling and causal power of artificial moral agents.',
+    tags: ['core','moral-agents','philosophy','interpretability'],
+    stars: { theoretical:5, practical:3, technical:4, accessible:2, extensible:5, importance:5, impact:5 },
+    links: [
+      ['arXiv',     'https://arxiv.org/abs/2103.02728', true],
+      ['PDF',       'https://arxiv.org/pdf/2103.02728', false],
+      ['Springer',  'https://doi.org/10.1007/978-3-031-21441-7_9', false]
+    ]
+  },
+  {
+    id: 'mars',
+    short: 'MARS',
+    title: 'Have a break from making decisions, have a MARS.',
+    subtitle: 'The multi-valued action reasoning system.',
+    authors: 'Cosmin Badea (sole-authored)',
+    venue: 'SGAI-AI 2022 / LNCS',
+    year: 2022, conceived: 2017,
+    cites: 12, core: true,
+    role: 'Formal system.',
+    tagline: 'A formal decision-making framework for modelling values, ethical theories, and moral dilemmas in artificial agents. The bones are general; the moral application is one instance.',
+    tags: ['core','mars','decision-making','logic'],
+    stars: { theoretical:4, practical:5, technical:5, accessible:2, extensible:5, importance:5, impact:4 },
+    links: [
+      ['arXiv',     'https://arxiv.org/abs/2109.03283', true],
+      ['PDF',       'https://arxiv.org/pdf/2109.03283', false],
+      ['Springer',  'https://doi.org/10.1007/978-3-031-21441-7_31', false]
+    ]
+  },
+  {
+    id: 'meta',
+    short: 'Meta-Decision-Making',
+    title: 'Establishing meta-decision-making for AI.',
+    subtitle: 'An ontology of relevance, representation, and reasoning.',
+    authors: 'Cosmin Badea & Leilani H. Gilpin',
+    venue: 'AAAI Fall Symposium / arXiv',
+    year: 2022, conceived: null,
+    cites: 11, core: true,
+    role: 'Decision-theoretic architecture.',
+    tagline: 'A bridge between AI reasoning, relevance, representation, and the problem of deciding how decisions should be made. The architecture that holds the rest of the programme together.',
+    tags: ['core','mars','decision-making'],
+    stars: { theoretical:5, practical:3, technical:4, accessible:2, extensible:5, importance:5, impact:4 },
+    links: [
+      ['arXiv', 'https://arxiv.org/abs/2210.00608', true],
+      ['PDF',   'https://arxiv.org/pdf/2210.00608', false]
+    ]
+  },
+  {
+    id: 'min-interp',
+    short: 'Minimum Interpretability',
+    title: 'Minimum levels of interpretability for artificial moral agents.',
+    authors: 'Avish Vijayaraghavan & Cosmin Badea',
+    venue: 'AI and Ethics, 5, 2071–2087',
+    year: 2025, conceived: null,
+    cites: 14, core: false,
+    role: 'Interpretability framework.',
+    tagline: 'A framework for asking how interpretable moral AI systems need to be before they can be trusted or safely deployed. Less a tool, more a contract.',
+    tags: ['interpretability','moral-agents'],
+    stars: { theoretical:4, practical:4, technical:4, accessible:3, extensible:4, importance:4, impact:4 },
+    links: [
+      ['Springer',     'https://doi.org/10.1007/s43681-024-00536-0', true],
+      ['arXiv',        'https://arxiv.org/abs/2307.00660', false],
+      ['PDF',          'https://arxiv.org/pdf/2307.00660', false],
+      ['Imperial PDF', 'https://spiral.imperial.ac.uk/server/api/core/bitstreams/9ae13687-609f-4b2d-a0ae-dd221bce5141/content', false]
+    ]
+  },
+  {
+    id: 'build-morality',
+    short: 'Building Morality into AI',
+    title: 'If our aim is to build morality into an artificial agent, how might we begin to go about doing so?',
+    authors: 'Reneira Seeamber & Cosmin Badea',
+    venue: 'IEEE Intelligent Systems, 38(6), 35–41',
+    year: 2023, conceived: null,
+    cites: 8, core: false,
+    role: 'Accessible synthesis.',
+    tagline: 'An accessible overview of the design space for artificial moral agents, including moral paradigms, governance, emotion, and hybrid design.',
+    tags: ['moral-agents','philosophy'],
+    stars: { theoretical:4, practical:4, technical:3, accessible:4, extensible:4, importance:4, impact:4 },
+    links: [
+      ['IEEE',  'https://doi.org/10.1109/MIS.2023.3320875', true],
+      ['arXiv', 'https://arxiv.org/abs/2310.08295', false],
+      ['PDF',   'https://arxiv.org/pdf/2310.08295', false]
+    ]
+  },
+  {
+    id: 'exemplars',
+    short: 'Moral Exemplars',
+    title: 'Moral exemplars for the virtuous machine.',
+    subtitle: 'The clinician\u2019s role in ethical AI for healthcare.',
+    authors: 'Sachin Hindocha & Cosmin Badea',
+    venue: 'AI and Ethics, 2, 167–175',
+    year: 2022, conceived: null,
+    cites: 47, core: false,
+    role: 'Virtue ethics in healthcare AI.',
+    tagline: 'A virtue-ethics approach to healthcare AI, arguing that clinicians can function as moral exemplars for responsible machine behaviour.',
+    tags: ['clinical','moral-agents','philosophy'],
+    stars: { theoretical:4, practical:4, technical:2, accessible:4, extensible:4, importance:4, impact:5 },
+    links: [
+      ['Springer', 'https://doi.org/10.1007/s43681-021-00089-6', true]
+    ]
+  },
+  {
+    id: 'antimicrobial',
+    short: 'Moral AI for Antimicrobial Use',
+    title: 'Developing moral AI to support decision-making about antimicrobial use.',
+    authors: 'Bolton, Badea, Georgiou, Holmes & Rawson',
+    venue: 'Nature Machine Intelligence, 4, 912–915',
+    year: 2022, conceived: null,
+    cites: 21, core: false,
+    role: 'Healthcare application.',
+    tagline: 'A high-impact healthcare application of moral AI, focused on antimicrobial prescribing and antimicrobial resistance.',
+    tags: ['clinical','decision-making'],
+    stars: { theoretical:3, practical:5, technical:3, accessible:4, extensible:4, importance:3, impact:5 },
+    links: [
+      ['Nature MI', 'https://doi.org/10.1038/s42256-022-00558-5', true],
+      ['arXiv',     'https://arxiv.org/abs/2208.06327', false],
+      ['PDF',       'https://arxiv.org/pdf/2208.06327', false]
+    ]
+  },
+  {
+    id: 'bad-news',
+    short: 'Breaking Bad News',
+    title: 'Breaking bad news in the era of artificial intelligence and algorithmic medicine.',
+    subtitle: 'An exploration of disclosure and its ethical justification using the hedonic calculus.',
+    authors: 'Post, Badea, Faisal & Brett',
+    venue: 'AI and Ethics',
+    year: 2023, conceived: null,
+    cites: 16, core: false,
+    role: 'Applied ethical case study.',
+    tagline: 'A concrete ethical case study using Bentham\u2019s felicific calculus to analyse AI-supported disclosure of bad medical news.',
+    tags: ['clinical'],
+    stars: { theoretical:3, practical:5, technical:3, accessible:4, extensible:3, importance:3, impact:4 },
+    links: [
+      ['Springer',   'https://doi.org/10.1007/s43681-022-00230-z', true],
+      ['arXiv',      'https://arxiv.org/abs/2207.01431', false],
+      ['PDF',        'https://arxiv.org/pdf/2207.01431', false],
+      ['PMC (open)', 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9628590/', false]
+    ]
+  },
+  {
+    id: 'consciousness',
+    short: 'Machine Consciousness',
+    title: 'Can a machine be conscious?',
+    subtitle: 'Towards universal criteria for machine consciousness.',
+    authors: 'Nur Aizaan Anwar & Cosmin Badea',
+    venue: 'arXiv preprint',
+    year: 2024, conceived: null,
+    cites: 3, core: false,
+    role: 'Machine consciousness criteria.',
+    tagline: 'A broad philosophical paper proposing criteria for machine consciousness and conscious entities more generally.',
+    tags: ['consciousness','philosophy','moral-agents'],
+    stars: { theoretical:5, practical:2, technical:2, accessible:4, extensible:4, importance:3, impact:2 },
+    links: [
+      ['arXiv', 'https://arxiv.org/abs/2404.15369', true],
+      ['PDF',   'https://arxiv.org/pdf/2404.15369', false]
+    ]
+  }
+];
+
+const RATING_LABELS = {
+  theoretical: 'Theoretical depth',
+  practical:   'Practical application',
+  technical:   'Technical sophistication',
+  accessible:  'Non-specialist readability',
+  extensible:  'Future research potential',
+  importance:  'Importance to programme',
+  impact:      'Academic impact'
+};
+const RATING_LABELS_SHORT = {
+  theoretical: 'Theory',
+  practical:   'Practice',
+  technical:   'Technical',
+  accessible:  'Non-specialist',
+  extensible:  'Future',
+  importance:  'Importance',
+  impact:      'Impact'
+};
+
+// ============================================================
+// RENDER
+// ============================================================
+function stars(n){
+  let s = '';
+  for(let i=0;i<5;i++) s += `<span class="${i<n?'on':''}">★</span>`;
+  return s;
+}
+
+function radarSVG(p){
+  const keys = Object.keys(RATING_LABELS);
+  const cx = 160, cy = 140, R = 80;
+  const N = keys.length;
+  function point(i, r){
+    const ang = -Math.PI/2 + (i/N) * Math.PI*2;
+    return [cx + Math.cos(ang)*r, cy + Math.sin(ang)*r];
+  }
+  // grid rings
+  let rings = '';
+  for(let g=1; g<=5; g++){
+    const r = (g/5)*R;
+    const pts = keys.map((_,i)=> point(i,r).join(',')).join(' ');
+    rings += `<polygon points="${pts}" fill="none" stroke="var(--rule)" stroke-width="1"/>`;
+  }
+  // axes + labels
+  let axes = '', labels = '';
+  keys.forEach((k,i)=>{
+    const [x,y] = point(i, R);
+    axes += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--rule)" stroke-width="1"/>`;
+    const [lx,ly] = point(i, R+18);
+    const anchor = lx < cx-2 ? 'end' : (lx > cx+2 ? 'start' : 'middle');
+    labels += `<text x="${lx}" y="${ly}" text-anchor="${anchor}" dominant-baseline="middle" font-family="var(--mono)" font-size="9" letter-spacing="0.05em" fill="var(--ink-3)">${RATING_LABELS_SHORT[k]}</text>`;
+  });
+  // polygon
+  const pts = keys.map((k,i)=> point(i, (p.stars[k]/5)*R).join(',')).join(' ');
+  return `<svg class="radar-svg" viewBox="0 0 320 280" aria-hidden="true">
+    ${rings}${axes}
+    <polygon points="${pts}" fill="var(--accent)" fill-opacity="0.18" stroke="var(--accent)" stroke-width="1.5"/>
+    ${labels}
+  </svg>`;
+}
+
+function paperHTML(p, idx){
+  const isCore = !!p.core;
+  const conceived = p.conceived ? `<span class="conceived">Conceived ${p.conceived}</span>` : '';
+  const linksHTML = p.links.map(([label,url,primary])=>{
+    return `<a class="${primary?'primary':''}" href="${url}" target="_blank" rel="noopener">${label}${primary?' →':''}</a>`;
+  }).join('');
+  const ratingsHTML = `
+    <div class="ratings">
+      ${Object.keys(RATING_LABELS).map(k=>`
+        <div class="rating"><span class="lbl">${RATING_LABELS[k]}</span><span class="stars">${stars(p.stars[k])}</span></div>
+      `).join('')}
+    </div>
+    <div class="radar-inline">${radarSVG(p)}</div>
+  `;
+  const radarHTML = '';
+  return `<article class="paper ${isCore?'core':''}" id="${p.id}" data-tags="${p.tags.join(',')}" data-year="${p.year}" data-cites="${p.cites}" data-core="${isCore?'1':'0'}">
+    <div class="num">${String(idx+1).padStart(2,'0')}</div>
+    <div class="main">
+      ${isCore?'<span class="core-badge">Core programme</span>':''}
+      <h2>${p.title}${p.subtitle?`<br><span style="font-size:.74em;color:var(--ink-2)">${p.subtitle}</span>`:''}</h2>
+      <p class="short"><b>Short:</b> ${p.short}</p>
+      <p class="role">${p.role}</p>
+      <p class="meta"><span style="color:var(--ink-2)">${p.authors}</span> &middot; <span class="venue">${p.venue}</span></p>
+      <p class="tagline">${p.tagline}</p>
+      <p class="tags">${p.tags.filter(t=>t!=='core').map(t=>`<span class="tag">${t}</span>`).join('')}</p>
+      <button type="button" class="respond" aria-expanded="false">Respond to this paper &rarr;</button>
+      <form class="respond-form" action="https://formsubmit.co/cosmin.badea23@gmail.com" method="POST">
+        <p class="intro">A line, a paragraph, a counter-argument, a pointer to related work, or a research question you think this paper opens. All welcome. Sent privately.</p>
+        <input type="hidden" name="_subject" value="cbadea.com . response to ${p.short.replace(/"/g,'&quot;')}">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="true">
+        <input type="hidden" name="_next" value="https://cbadea.com/research.html?sent=1#${p.id}">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="paper" value="${p.short.replace(/"/g,'&quot;')} (${p.year})">
+        <div class="rf-row two">
+          <label><span>Name</span><input name="name" required></label>
+          <label><span>Email</span><input type="email" name="email" required></label>
+        </div>
+        <label class="rf-row"><span>Kind of thought</span>
+          <select name="kind">
+            <option>Comment or reaction</option>
+            <option>Criticism or pushback</option>
+            <option>Future-work idea</option>
+            <option>Question</option>
+            <option>Correction</option>
+            <option>Collaboration proposal</option>
+          </select>
+        </label>
+        <label class="rf-row"><span>Your thought on this paper</span><textarea name="message" rows="4" required></textarea></label>
+        <div class="rf-foot">
+          <button type="submit">Send &rarr;</button>
+          <span class="note">Private. Sent securely to my research inbox.</span>
+        </div>
+      </form>
+    </div>
+    <div class="side">
+      <div class="yr-row">
+        <div class="year">${p.year}${conceived}</div>
+        <div class="cites"><strong>${p.cites}</strong>cites</div>
+      </div>
+      <div class="actions">${linksHTML}</div>
+      ${ratingsHTML}
+    </div>
+    ${radarHTML}
+  </article>`;
+}
+
+let currentOrder = 'programme';
+
+function renderPapers(){
+  const arr = PAPERS.slice();
+  if(currentOrder === 'programme'){
+    arr.sort((a,b)=>{
+      if(a.core !== b.core) return a.core ? -1 : 1;
+      // preserve core order, then descending importance for the rest
+      if(a.core && b.core) return PAPERS.indexOf(a) - PAPERS.indexOf(b);
+      return b.stars.importance - a.stars.importance || b.cites - a.cites;
+    });
+  } else if(currentOrder === 'cites'){
+    arr.sort((a,b)=> b.cites - a.cites);
+  } else if(currentOrder === 'year'){
+    arr.sort((a,b)=> b.year - a.year);
+  }
+  const wrap = document.getElementById('papers');
+  wrap.innerHTML = arr.map((p,i)=> paperHTML(p, i)).join('');
+}
+
+renderPapers();
+attachRespondHandlers();
+
+function attachRespondHandlers(){
+  document.querySelectorAll('.paper .respond').forEach(btn=>{
+    btn.onclick = ()=>{
+      const form = btn.parentElement.querySelector('.respond-form');
+      const open = form.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.textContent = open ? 'Close response' : 'Respond to this paper →';
+      if(open){ setTimeout(()=>{ const f = form.querySelector('input[name="name"]'); if(f) f.focus(); }, 60); }
+    };
+  });
+}
+// ============================================================
+document.querySelectorAll('#filters button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('#filters button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const tag = btn.dataset.tag;
+    document.querySelectorAll('#papers .paper').forEach(p=>{
+      if(tag === 'all') return p.classList.remove('hidden');
+      if(tag === 'core'){
+        p.classList.toggle('hidden', p.dataset.core !== '1');
+      } else {
+        const tags = (p.dataset.tags||'').split(',');
+        p.classList.toggle('hidden', !tags.includes(tag));
+      }
+    });
+    renderTimeline(tag);
+  });
+});
+
+// ============================================================
+// TIMELINE
+// ============================================================
+const svg = document.getElementById('tl-svg-bottom');
+const tipEl = document.getElementById('tl-tooltip-bottom');
+const W = 1000, H = 200;
+const padL = 60, padR = 30, padT = 40, padB = 36;
+const innerW = W - padL - padR;
+const years = [2021, 2022, 2023, 2024, 2025];
+const yearX = y => padL + ((y - years[0]) / (years[years.length-1] - years[0])) * innerW;
+const maxC = Math.max(8, ...PAPERS.map(p=>p.cites));
+const radius = c => 6 + Math.sqrt(c / maxC) * 18;
+
+function renderTimeline(tag){
+  tag = tag || 'all';
+  let html = '';
+  const axisY = H - padB;
+  html += `<line class="tl-axis" x1="${padL}" y1="${axisY}" x2="${W-padR}" y2="${axisY}"/>`;
+  years.forEach(y=>{
+    const x = yearX(y);
+    html += `<line class="tl-line" x1="${x}" y1="${padT-8}" x2="${x}" y2="${axisY}"/>`;
+    html += `<text class="tl-tick" x="${x}" y="${axisY+22}" text-anchor="middle">${y}</text>`;
+  });
+  const byYear = {};
+  PAPERS.forEach(p=>{ (byYear[p.year] = byYear[p.year]||[]).push(p) });
+  Object.values(byYear).forEach(a=>a.sort((x,y)=> y.cites - x.cites));
+  Object.entries(byYear).forEach(([y, arr])=>{
+    const x = yearX(parseInt(y,10));
+    const n = arr.length;
+    arr.forEach((p, i)=>{
+      const top = padT + 8, bot = axisY - 14;
+      const cy = n===1 ? (top+bot)/2 : top + (i/(n-1)) * (bot - top - 30) + 15;
+      let dim = false;
+      if(tag !== 'all'){
+        if(tag === 'core') dim = !p.core;
+        else dim = !p.tags.includes(tag);
+      }
+      const fill = dim ? 'var(--paper-3)' : 'var(--accent)';
+      const stroke = p.core ? 'var(--ink)' : 'var(--ink-3)';
+      const sw = p.core ? 2 : 1;
+      const op = dim ? 0.3 : 1;
+      html += `<a href="#${p.id}" data-id="${p.id}" data-title="${p.short.replace(/"/g,'&quot;')}" data-cites="${p.cites}" data-year="${p.year}" data-core="${p.core?'1':'0'}">
+        <circle cx="${x}" cy="${cy}" r="${radius(p.cites)}" fill="${fill}" stroke="${stroke}" stroke-width="${sw}" opacity="${op}" />
+      </a>`;
+    });
+  });
+  svg.innerHTML = html;
+  svg.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('mouseenter', ()=>{
+      const t = a.dataset.title; const c = a.dataset.cites; const yr = a.dataset.year; const core = a.dataset.core==='1';
+      tipEl.innerHTML = `<strong>${t}</strong><br>${yr} &middot; ${c} cites${core?' &middot; core programme':''}`;
+      const r = a.getBoundingClientRect(), w = svg.parentElement.getBoundingClientRect();
+      tipEl.style.left = (r.left + r.width/2 - w.left) + 'px';
+      tipEl.style.top  = (r.top - w.top - 8) + 'px';
+      tipEl.style.opacity = '1';
+    });
+    a.addEventListener('mouseleave', ()=>{ tipEl.style.opacity='0' });
+    a.addEventListener('click', e=>{
+      e.preventDefault();
+      const el = document.getElementById(a.dataset.id);
+      if(!el) return;
+      el.classList.remove('hidden');
+      el.scrollIntoView({behavior:'smooth', block:'start'});
+      el.classList.add('flash');
+      setTimeout(()=>el.classList.remove('flash'), 1400);
+    });
+  });
+}
+
+renderTimeline('all');
+
+// Apply ?filter=X from URL
+(function(){
+  const m = location.search.match(/[?&]filter=([^&]+)/);
+  if(!m) return;
+  const tag = decodeURIComponent(m[1]);
+  const btn = document.querySelector(`#filters button[data-tag="${tag}"]`);
+  if(btn){ btn.click(); setTimeout(()=>btn.scrollIntoView({behavior:'smooth', block:'center'}), 100); }
+})();
+
+// ============================================================
+// TWEAKS (edit mode)
+// ============================================================
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "ratings": "both",
+  "order": "programme"
+}/*EDITMODE-END*/;
+const tweakState = Object.assign({}, TWEAK_DEFAULTS);
+
+function applyTweaks(){
+  document.body.classList.remove('stars-only','radar-only');
+  if(tweakState.ratings === 'stars') document.body.classList.add('stars-only');
+  else if(tweakState.ratings === 'radar') document.body.classList.add('radar-only');
+  currentOrder = tweakState.order;
+  renderPapers();
+  attachRespondHandlers();
+  const active = document.querySelector('#filters button.active');
+  if(active && active.dataset.tag !== 'all'){
+    active.click();
+  }
+}
+
+function renderPanel(){
+  document.querySelectorAll('#tw-rate button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.v === tweakState.ratings);
+    b.onclick = ()=> setT('ratings', b.dataset.v);
+  });
+  document.querySelectorAll('#tw-order button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.v === tweakState.order);
+    b.onclick = ()=> setT('order', b.dataset.v);
+  });
+}
+function setT(k,v){
+  tweakState[k] = v;
+  applyTweaks(); renderPanel();
+  try{ window.parent.postMessage({type:'__edit_mode_set_keys', edits:{[k]:v}}, '*') }catch(e){}
+}
+const panel = document.getElementById('tweaks-panel');
+window.addEventListener('message', e=>{
+  const d = e.data||{};
+  if(d.type==='__activate_edit_mode'){ panel.classList.add('open'); panel.setAttribute('aria-hidden','false'); renderPanel(); }
+  if(d.type==='__deactivate_edit_mode'){ panel.classList.remove('open'); panel.setAttribute('aria-hidden','true'); }
+});
+document.getElementById('tw-close').onclick = ()=>{
+  panel.classList.remove('open');
+  try{ window.parent.postMessage({type:'__edit_mode_dismissed'}, '*') }catch(e){}
+};
+try{ window.parent.postMessage({type:'__edit_mode_available'}, '*') }catch(e){}
+applyTweaks();
+</script>
+
+</body>
+</html>

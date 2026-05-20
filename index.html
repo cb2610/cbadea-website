@@ -85,6 +85,17 @@ p{text-wrap:pretty;margin:0 0 1.2em}
 .top nav{display:flex;gap:22px;flex-wrap:wrap;justify-content:flex-end}
 .top nav a{border-bottom:none}
 .top nav a:hover{color:var(--accent)}
+.mode-toggle-row{ display:flex; justify-content:flex-end; padding: 10px 0 0; }
+.mode-toggle{
+  background: transparent; color: var(--ink-2); border: 1px solid var(--rule);
+  width: 24px; height: 24px; padding: 0; cursor: pointer;
+  display:inline-flex; align-items:center; justify-content:center;
+  transition: color .2s, border-color .2s, background .2s;
+}
+.mode-toggle:hover{ color: var(--accent); border-color: var(--accent) }
+.mode-toggle .mt-sun, .mode-toggle .mt-moon{ display:none; width:11px; height:11px }
+.mode-toggle[data-resolved="light"] .mt-sun{ display:inline-block }
+.mode-toggle[data-resolved="dark"]  .mt-moon{ display:inline-block }
 
 /* ---------- hero ---------- */
 .hero{
@@ -273,6 +284,9 @@ section:last-of-type{border-bottom:none}
 .interest .ix{
   font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--ink-3);padding-top:6px;
 }
+.interest h3 a.thread-link{ color:inherit; border-bottom:none; transition: color .2s }
+.interest h3 a.thread-link:hover{ color:var(--accent) }
+.interest:hover h3 a.thread-link{ color:var(--accent) }
 .interest h3{
   font-family:var(--serif); font-style:italic; font-weight:400;
   font-size: clamp(22px, 2.2vw, 28px);
@@ -296,6 +310,8 @@ section:last-of-type{border-bottom:none}
 .pub .num{ font-family:var(--mono); font-size:11px; letter-spacing:.1em; color:var(--ink-3); padding-top:6px}
 .pub .body{ min-width:0 }
 .pub .title{ font-family:var(--serif); font-size: 22px; line-height:1.25; color:var(--ink); }
+.pub .title a{ color:inherit; border-bottom: 1px solid transparent; transition: border-color .2s, color .2s }
+.pub .title a:hover{ color:var(--accent); border-bottom-color: var(--accent) }
 .pub .title em{ font-style:italic }
 .pub .meta{ display:block; font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--ink-2); margin-top:8px; text-transform:uppercase; letter-spacing:.14em }
 .pub .venue{ color:var(--accent) }
@@ -463,14 +479,20 @@ footer{
     <nav aria-label="Primary">
       <a href="#paradigm">Paradigm</a>
       <a href="#about">About</a>
-      <a href="#research">Research</a>
-      <a href="#publications">Writing</a>
+      <a href="research.html" style="color:var(--accent)">Papers &rarr;</a>
+      <a href="#research">Themes</a>
       <a href="#teaching">Teaching</a>
       <a href="#roles">Roles</a>
       <a href="#elsewhere">Elsewhere</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
+  <div class="mode-toggle-row">
+    <button id="mode-toggle" class="mode-toggle" type="button" aria-label="Toggle day or night" title="Day / Night">
+      <svg class="mt-sun" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="10" cy="10" r="3.4" fill="currentColor"/><g stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><line x1="10" y1="1.5" x2="10" y2="3.5"/><line x1="10" y1="16.5" x2="10" y2="18.5"/><line x1="1.5" y1="10" x2="3.5" y2="10"/><line x1="16.5" y1="10" x2="18.5" y2="10"/><line x1="4" y1="4" x2="5.4" y2="5.4"/><line x1="14.6" y1="14.6" x2="16" y2="16"/><line x1="4" y1="16" x2="5.4" y2="14.6"/><line x1="14.6" y1="5.4" x2="16" y2="4"/></g></svg>
+      <svg class="mt-moon" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><path d="M14.5 12.5A6.5 6.5 0 0 1 7.5 5.5a6.5 6.5 0 1 0 7 7z" fill="currentColor"/></svg>
+    </button>
+  </div>
 
   <!-- ============ HERO ============ -->
   <section class="hero" aria-labelledby="hero-name">
@@ -485,9 +507,9 @@ footer{
       <h1 id="hero-name">Cosmin<span class="second">Badea</span></h1>
       <p class="hero-lede">I research, lecture, and advise, on AI, decision-making, and ethics, and on value structures we can investigate, implement, and improve.</p>
       <div class="hero-meta">
-        <strong>Imperial College London</strong> . lecturer<br>
-        <strong>Ethicos AI</strong> . founder and managing director<br>
-        <strong>4P-CAN</strong> &amp; <strong>FH-EARLY</strong> . Chief AI and Ethics Officer, EC-funded consortia
+        <strong><a href="https://profiles.imperial.ac.uk/cosmin.badea10" target="_blank" rel="noopener">Imperial College London</a></strong> . lecturer<br>
+        <strong><a href="https://ethicos.co.uk" target="_blank" rel="noopener">Ethicos AI</a></strong> . founder and managing director<br>
+        <strong><a href="https://4p-can.eu" target="_blank" rel="noopener">4P-CAN</a></strong> &amp; <strong><a href="https://fh-early.eu" target="_blank" rel="noopener">FH-EARLY</a></strong> . Chief AI and Ethics Officer, EC-funded consortia
       </div>
     </div>
     <div class="portrait" aria-hidden="true">
@@ -516,7 +538,7 @@ footer{
         <h2 class="sec-title" id="paradigm-h">A working note on what I am doing, and why.</h2>
       </div>
       <div class="sec-body prose">
-        <p class="lede">My research keeps returning to one problem. We do not yet have good top-down, logic-based, explicitly moral frameworks that a machine can reason through.</p>
+        <p class="lede">My research keeps returning to one problem. We do not yet have good top-down, logic-based, explicitly moral frameworks that a machine can reason through. <a href="research.html" style="font-style:italic;color:var(--accent);border-bottom-color:var(--accent)">Read the papers &rarr;</a></p>
         <p>Almost everything we currently use is bottom-up. Behaviours shaped by examples, preferences inferred from clicks, refusals trained in by demonstration. That gives us systems whose values we can describe but not interrogate, and whose failure modes are felt before they are understood.</p>
         <p>I want to close that gap. The direction I am working in, which I call <em>moral paradigms</em>, is to extract the implicit value structure of a model from its responses to structured probes, in a form that is explicit, logic-based, and inspectable by a human. The paradigm is the artefact; the model behaviour is the evidence; the probes are the instrument.</p>
         <p>The bet is simple. If you can write a model's ethics down, you can argue with it.</p>
@@ -552,56 +574,56 @@ footer{
           <li class="interest signature">
             <div class="ix">01</div>
             <div>
-              <h3>Moral paradigms</h3>
+              <h3><a class="thread-link" href="research.html?filter=core">Moral paradigms &rarr;</a></h3>
               <p>Extracting and formalising the implicit value structure of an AI in a way humans can inspect, contest, and improve. The signature line of the work.</p>
             </div>
           </li>
           <li class="interest">
             <div class="ix">02</div>
             <div>
-              <h3>Good decision-making (MARS)</h3>
+              <h3><a class="thread-link" href="research.html?filter=mars">Good decision-making (MARS) &rarr;</a></h3>
               <p>MARS, the multi-valued action reasoning system, is a general decision-making framework. I happen to apply it to moral reasoning, but the bones are about reasoning over actions, values, and competing considerations in any high-stakes setting.</p>
             </div>
           </li>
           <li class="interest">
             <div class="ix">03</div>
             <div>
-              <h3>Interpretability</h3>
+              <h3><a class="thread-link" href="research.html?filter=interpretability">Interpretability &rarr;</a></h3>
               <p>Particularly the question of how much interpretability is enough, for whom, and at what cost. Less a tool, more a contract.</p>
             </div>
           </li>
           <li class="interest">
             <div class="ix">04</div>
             <div>
-              <h3>Value alignment and rule-based AI</h3>
+              <h3><a class="thread-link" href="research.html?filter=moral-agents">Value alignment and rule-based AI &rarr;</a></h3>
               <p>Top-down, logic-first frameworks for machine ethics, including hybrid systems that pair learned components with explicit reasoning. Connected to the Artus and Badea law on scaling and causal power of artificial moral agents.</p>
             </div>
           </li>
           <li class="interest">
             <div class="ix">05</div>
             <div>
-              <h3>Meta-decision-making</h3>
+              <h3><a class="thread-link" href="research.html?filter=mars">Meta-decision-making &rarr;</a></h3>
               <p>How AI systems choose among decision procedures, and how that choice itself can be made principled and inspectable. An ontology of relevance, representation, and reasoning.</p>
             </div>
           </li>
           <li class="interest">
             <div class="ix">06</div>
             <div>
-              <h3>Philosophy of AI and ethics</h3>
+              <h3><a class="thread-link" href="research.html?filter=philosophy">Philosophy of AI and ethics &rarr;</a></h3>
               <p>The Wittgensteinian, virtue-theoretic, and rule-following questions that sit underneath what we now call alignment. A serious philosophical reading of what these systems are doing.</p>
             </div>
           </li>
           <li class="interest">
             <div class="ix">07</div>
             <div>
-              <h3>Artificial moral agents</h3>
+              <h3><a class="thread-link" href="research.html?filter=moral-agents">Artificial moral agents &rarr;</a></h3>
               <p>What it would take, conceptually and computationally, for a machine to count as a moral agent in any non-trivial sense.</p>
             </div>
           </li>
           <li class="interest">
             <div class="ix">08</div>
             <div>
-              <h3>AI ethics in clinical practice</h3>
+              <h3><a class="thread-link" href="research.html?filter=clinical">AI ethics in clinical practice &rarr;</a></h3>
               <p>Concrete settings where the abstract questions bite. Antimicrobial decision-making, personalised oncology, breaking bad news, and AI in mental health and wellbeing.</p>
             </div>
           </li>
@@ -632,7 +654,7 @@ footer{
           <li class="pub">
             <div class="num">01</div>
             <div class="body">
-              <div class="title">Have a break from making decisions, have a MARS. <em>The multi-valued action reasoning system.</em></div>
+              <div class="title"><a href="https://arxiv.org/abs/2109.03283" target="_blank" rel="noopener">Have a break from making decisions, have a MARS. <em>The multi-valued action reasoning system.</em></a></div>
               <span class="meta">Badea, sole-authored . <span class="venue">SGAI International Conference on AI (LNAI)</span></span>
             </div>
             <div class="year">2022</div>
@@ -640,7 +662,7 @@ footer{
           <li class="pub">
             <div class="num">02</div>
             <div class="body">
-              <div class="title">Morality, machines, and the interpretation problem. <em>A value-based, Wittgensteinian approach to building moral agents.</em></div>
+              <div class="title"><a href="https://arxiv.org/abs/2103.02728" target="_blank" rel="noopener">Morality, machines, and the interpretation problem. <em>A value-based, Wittgensteinian approach to building moral agents.</em></a></div>
               <span class="meta">Badea &amp; Artus . establishes the Artus and Badea law . <span class="venue">SGAI International Conference on AI (LNAI)</span></span>
             </div>
             <div class="year">2022</div>
@@ -648,7 +670,7 @@ footer{
           <li class="pub">
             <div class="num">03</div>
             <div class="body">
-              <div class="title">Developing moral AI to support decision-making about antimicrobial use.</div>
+              <div class="title"><a href="https://doi.org/10.1038/s42256-022-00558-5" target="_blank" rel="noopener">Developing moral AI to support decision-making about antimicrobial use.</a></div>
               <span class="meta">Bolton, Badea, Georgiou, Holmes &amp; Rawson . <span class="venue">Nature Machine Intelligence</span></span>
             </div>
             <div class="year">2022</div>
@@ -656,7 +678,7 @@ footer{
           <li class="pub">
             <div class="num">04</div>
             <div class="body">
-              <div class="title">Minimum levels of interpretability for artificial moral agents.</div>
+              <div class="title"><a href="https://doi.org/10.1007/s43681-024-00536-0" target="_blank" rel="noopener">Minimum levels of interpretability for artificial moral agents.</a></div>
               <span class="meta">Vijayaraghavan &amp; Badea . <span class="venue">AI and Ethics</span> 5, 2071–2087</span>
             </div>
             <div class="year">2025</div>
@@ -664,7 +686,7 @@ footer{
           <li class="pub">
             <div class="num">05</div>
             <div class="body">
-              <div class="title">Establishing meta-decision-making for AI. <em>An ontology of relevance, representation, and reasoning.</em></div>
+              <div class="title"><a href="https://arxiv.org/abs/2210.00608" target="_blank" rel="noopener">Establishing meta-decision-making for AI. <em>An ontology of relevance, representation, and reasoning.</em></a></div>
               <span class="meta">Badea &amp; Gilpin . <span class="venue">AAAI Fall Symposium</span></span>
             </div>
             <div class="year">2021</div>
@@ -672,7 +694,7 @@ footer{
           <li class="pub">
             <div class="num">06</div>
             <div class="body">
-              <div class="title">If our aim is to build morality into an artificial agent, how might we begin to go about doing so?</div>
+              <div class="title"><a href="https://doi.org/10.1109/MIS.2023.3320875" target="_blank" rel="noopener">If our aim is to build morality into an artificial agent, how might we begin to go about doing so?</a></div>
               <span class="meta">Seeamber &amp; Badea . <span class="venue">IEEE Intelligent Systems</span></span>
             </div>
             <div class="year">2023</div>
@@ -680,7 +702,7 @@ footer{
           <li class="pub">
             <div class="num">07</div>
             <div class="body">
-              <div class="title">Breaking bad news in the era of artificial intelligence and algorithmic medicine.</div>
+              <div class="title"><a href="https://doi.org/10.1007/s43681-022-00230-z" target="_blank" rel="noopener">Breaking bad news in the era of artificial intelligence and algorithmic medicine.</a></div>
               <span class="meta">Post, Badea, Faisal &amp; Brett . <span class="venue">AI and Ethics</span></span>
             </div>
             <div class="year">2022</div>
@@ -688,13 +710,13 @@ footer{
           <li class="pub">
             <div class="num">08</div>
             <div class="body">
-              <div class="title">Moral exemplars for the virtuous machine. <em>The clinician's role in ethical AI for healthcare.</em></div>
+              <div class="title"><a href="https://doi.org/10.1007/s43681-021-00089-6" target="_blank" rel="noopener">Moral exemplars for the virtuous machine. <em>The clinician's role in ethical AI for healthcare.</em></a></div>
               <span class="meta">Hindocha &amp; Badea . <span class="venue">AI and Ethics</span></span>
             </div>
             <div class="year">2022</div>
           </li>
         </ol>
-        <p style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--ink-3);margin-top:22px;text-transform:uppercase">Full list, with preprints, on <a href="https://scholar.google.co.uk/citations?user=kdVRQOYAAAAJ&amp;hl=en" rel="me">Google Scholar</a>.</p>
+        <p style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--ink-3);margin-top:22px;text-transform:uppercase">Full list, with preprints, on <a href="https://scholar.google.co.uk/citations?user=kdVRQOYAAAAJ&amp;hl=en" rel="me">Google Scholar</a>. Or <a href="research.html">read the papers here &rarr;</a></p>
         <dl class="metrics" aria-label="Google Scholar metrics">
           <div class="metric" tabindex="0">
             <dt>Citations</dt><dd>141</dd>
@@ -796,6 +818,14 @@ footer{
         <ul class="entries" id="news-list" data-window-months="24">
           <li class="entry" data-date="2026-05">
             <div class="when">May 2026</div>
+            <div class="what">A dedicated <a href="research.html">research page</a> goes up: read the papers, share a thought, explore at your own pace.</div>
+          </li>
+          <li class="entry" data-date="2026-05">
+            <div class="when">May 2026</div>
+            <div class="what"><em>Ethicos AI</em> launches its public site soon at <a href="https://ethicos.co.uk" target="_blank" rel="noopener">ethicos.co.uk</a>.</div>
+          </li>
+          <li class="entry" data-date="2026-05">
+            <div class="when">May 2026</div>
             <div class="what">New site, new direction. The work has a name: <em>moral paradigms</em>.</div>
           </li>
           <li class="entry" data-date="2026-02">
@@ -828,7 +858,7 @@ footer{
         <h2 class="sec-title" id="elsewhere-h">Off the page, in another voice.</h2>
       </div>
       <div class="sec-body prose">
-        <p>Away from the work, I read romantic literature, debate ideas with anyone who will, listen to a great deal of music, and take a good story however it arrives, in a book, a game, or a friend's telling. I fence, play football, and walk my Samoyed, Icy, who is unimpressed by all of the above.</p>
+        <p>Away from the work, I read (especially science fiction and philosophical texts), debate ideas with anyone who will, listen to a great deal of music, and take a good story however it arrives, in a book, a game, or a friend's telling. I fence, play football, and walk my Samoyed, Icy, who is unimpressed by all of the above.</p>
         <p>I sometimes write poetry. It tends to be quieter, slower, and sadder than the rest of the page. <a class="poetry-link" href="poetry.html">A small reading, behind a closed door &rarr;</a></p>
       </div>
     </div>
@@ -866,18 +896,18 @@ footer{
           <label class="cf-row"><span>Message</span><textarea name="message" rows="5" required></textarea></label>
           <div class="cf-actions">
             <button type="submit">Send <span aria-hidden="true">&rarr;</span></button>
-            <span class="cf-note">Sent securely to <code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1d7e726e5d786975747e726e337e72336876">[email&#160;protected]</a></code>. No tracking. No newsletter.</span>
+            <span class="cf-note">Sent securely to <code>cos@ethicos.co.uk</code>. No tracking. No newsletter.</span>
           </div>
         </form>
 
         <div class="contact-grid" style="margin-top:48px">
           <div class="contact-card">
             <div class="label">Academic</div>
-            <div class="val"><a href="/cdn-cgi/l/email-protection#1d7e337f7c79787c5d74706d786f747c71337c7e336876"><span class="__cf_email__" data-cfemail="b3d09dd1d2d7d6d2f3dadec3d6c1dad2df9dd2d09dc6d8">[email&#160;protected]</span></a></div>
+            <div class="val"><a href="mailto:c.badea@imperial.ac.uk">c.badea@imperial.ac.uk</a></div>
           </div>
           <div class="contact-card">
             <div class="label">Work inquiries</div>
-            <div class="val"><a href="/cdn-cgi/l/email-protection#20434f536045544849434f530e434f0e554b"><span class="__cf_email__" data-cfemail="d6b5b9a596b3a2bebfb5b9a5f8b5b9f8a3bd">[email&#160;protected]</span></a></div>
+            <div class="val"><a href="mailto:cos@ethicos.co.uk">cos@ethicos.co.uk</a></div>
           </div>
           <div class="contact-card">
             <div class="label">Imperial profile</div>
@@ -946,7 +976,9 @@ footer{
   .tweak-row{ margin: 12px 0 0; }
   .tweak-row > .tlabel{ display:block; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-3); margin-bottom:6px }
   .tweak-row .swatches{ display:flex; gap:6px; flex-wrap:wrap }
-  .swatch{ width:26px; height:26px; border-radius:50%; border:1px solid var(--rule); cursor:pointer; padding:0; transition: transform .15s }
+  .swatch{ width:26px; height:26px; border-radius:50%; border:1px solid var(--rule); cursor:pointer; padding:0; transition: transform .15s; overflow:hidden; display:inline-flex }
+  .swatch.palette{ width: 36px; height: 26px; border-radius: 3px; }
+  .swatch.palette span{ flex:1; display:block; height:100%; }
   .swatch.active{ outline:2px solid var(--ink); outline-offset:2px }
   .swatch:hover{ transform: scale(1.08) }
   .seg{ display:flex; border:1px solid var(--rule); }
@@ -960,35 +992,20 @@ footer{
     <button class="close" id="tw-close" aria-label="Close tweaks">close ×</button>
   </header>
   <div class="tweak-row">
-    <span class="tlabel">Accent</span>
-    <div class="swatches" id="tw-accent"></div>
-  </div>
-  <div class="tweak-row">
-    <span class="tlabel">Display style</span>
-    <div class="seg" id="tw-display">
-      <button data-v="italic">Italic</button>
-      <button data-v="roman">Roman</button>
-      <button data-v="sans">Sans</button>
+    <span class="tlabel">Appearance</span>
+    <div class="seg" id="tw-mode">
+      <button data-v="light">Day</button>
+      <button data-v="auto">Auto</button>
+      <button data-v="dark">Night</button>
     </div>
   </div>
   <div class="tweak-row">
-    <span class="tlabel">Motif</span>
-    <div class="seg" id="tw-motif">
-      <button data-v="rule">Rule</button>
-      <button data-v="network">Network</button>
-      <button data-v="none">None</button>
-    </div>
-  </div>
-  <div class="tweak-row">
-    <span class="tlabel">Density</span>
-    <div class="seg" id="tw-density">
-      <button data-v="editorial">Editorial</button>
-      <button data-v="dense">Dense</button>
-    </div>
+    <span class="tlabel">Palette</span>
+    <div class="swatches" id="tw-theme"></div>
   </div>
 </aside>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // Lightweight reveal for glyphs and section heads.
 const io = new IntersectionObserver(entries=>{
   for (const e of entries) if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);}
@@ -1021,102 +1038,81 @@ document.querySelectorAll(".rule-glyph, .sec-head, .hero h1, .hero-lede, .portra
 
 // ===== Tweaks (edit-mode protocol) =====
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "accent": "oxblood",
-  "display": "italic",
-  "motif": "rule",
-  "density": "editorial"
+  "theme": "auto",
+  "mode": "dark"
 }/*EDITMODE-END*/;
 
-const ACCENTS = {
-  oxblood: { light: 'oklch(42% 0.135 28)', dark: 'oklch(72% 0.14 30)', swatch:'#7a2a1f' },
-  ink:     { light: 'oklch(28% 0.04 260)', dark: 'oklch(72% 0.08 260)', swatch:'#2a3850' },
-  forest:  { light: 'oklch(40% 0.10 150)', dark: 'oklch(72% 0.13 150)', swatch:'#2f6048' },
-  ochre:   { light: 'oklch(54% 0.12 70)',  dark: 'oklch(76% 0.13 75)',  swatch:'#9a6a1f' }
+// palettes: each has light + dark variants. Italic display, rule motif, editorial density are fixed.
+const THEMES = {
+  auto:     { name:'Paper / Blood (auto)', swatches:['#efe9e2','#0a0908','#b40e1f'], pair:true },
+  paper:    { name:'Paper',           swatches:['#efe9e2','#1a1716','#7a2a1f'],
+              light:{paper:'oklch(97.5% 0.006 80)',paper2:'oklch(95.2% 0.010 80)',paper3:'oklch(92.0% 0.012 80)',ink:'oklch(20% 0.012 60)',ink2:'oklch(36% 0.010 60)',ink3:'oklch(55% 0.008 60)',rule:'oklch(80% 0.012 70)',ruleStrong:'oklch(60% 0.012 70)',accent:'oklch(42% 0.135 28)'},
+              dark: {paper:'oklch(14.5% 0.008 60)',paper2:'oklch(17.5% 0.010 60)',paper3:'oklch(21.0% 0.012 60)',ink:'oklch(93% 0.010 80)',ink2:'oklch(74% 0.008 80)',ink3:'oklch(54% 0.008 80)',rule:'oklch(30% 0.010 60)',ruleStrong:'oklch(48% 0.012 60)',accent:'oklch(72% 0.140 30)'} },
+  blood:    { name:'Black & Blood',    swatches:['#070504','#ece0d3','#b40e1f'],
+              light:{paper:'oklch(95% 0.008 60)',paper2:'oklch(92% 0.010 60)',paper3:'oklch(88% 0.012 60)',ink:'oklch(14% 0.010 30)',ink2:'oklch(30% 0.022 30)',ink3:'oklch(50% 0.024 30)',rule:'oklch(76% 0.020 30)',ruleStrong:'oklch(54% 0.024 30)',accent:'oklch(46% 0.24 25)'},
+              dark: {paper:'oklch(8% 0.006 30)',paper2:'oklch(12% 0.010 30)',paper3:'oklch(16% 0.014 30)',ink:'oklch(94% 0.008 80)',ink2:'oklch(74% 0.012 60)',ink3:'oklch(50% 0.022 30)',rule:'oklch(24% 0.028 30)',ruleStrong:'oklch(40% 0.034 30)',accent:'oklch(60% 0.26 25)'} },
+  gold:     { name:'Black & Gold',     swatches:['#0a0907','#f0e8d2','#c69638'],
+              light:{paper:'oklch(96% 0.020 85)',paper2:'oklch(92% 0.024 85)',paper3:'oklch(88% 0.026 85)',ink:'oklch(16% 0.018 60)',ink2:'oklch(34% 0.022 70)',ink3:'oklch(54% 0.024 75)',rule:'oklch(78% 0.022 80)',ruleStrong:'oklch(58% 0.024 80)',accent:'oklch(60% 0.13 75)'},
+              dark: {paper:'oklch(9% 0.010 75)',paper2:'oklch(13% 0.014 75)',paper3:'oklch(17% 0.016 75)',ink:'oklch(94% 0.022 85)',ink2:'oklch(78% 0.028 80)',ink3:'oklch(56% 0.022 75)',rule:'oklch(24% 0.022 75)',ruleStrong:'oklch(40% 0.028 75)',accent:'oklch(76% 0.16 80)'} },
+  bone:     { name:'Bone & Ink',       swatches:['#f3eee5','#0a0908','#0a0908'],
+              light:{paper:'oklch(97% 0.004 80)',paper2:'oklch(94% 0.005 80)',paper3:'oklch(90% 0.005 80)',ink:'oklch(10% 0.005 60)',ink2:'oklch(30% 0.005 60)',ink3:'oklch(55% 0.005 60)',rule:'oklch(80% 0.005 60)',ruleStrong:'oklch(55% 0.005 60)',accent:'oklch(15% 0.010 60)'},
+              dark: {paper:'oklch(8% 0.004 60)',paper2:'oklch(12% 0.005 60)',paper3:'oklch(16% 0.006 60)',ink:'oklch(96% 0.005 80)',ink2:'oklch(78% 0.005 80)',ink3:'oklch(55% 0.005 80)',rule:'oklch(28% 0.006 60)',ruleStrong:'oklch(48% 0.006 60)',accent:'oklch(96% 0.005 80)'} }
 };
 
 const state = Object.assign({}, TWEAK_DEFAULTS);
+const mql = matchMedia('(prefers-color-scheme: dark)');
 
-function applyAccent(name){
-  const a = ACCENTS[name] || ACCENTS.oxblood;
-  const dark = matchMedia('(prefers-color-scheme: dark)').matches;
-  const v = dark ? a.dark : a.light;
-  document.documentElement.style.setProperty('--accent', v);
-  // soft form
-  document.documentElement.style.setProperty('--accent-soft', v.replace(')', ' / 0.10)').replace('oklch(', 'oklch('));
+function resolveDark(){
+  if(state.mode === 'dark') return true;
+  if(state.mode === 'light') return false;
+  return mql.matches;
 }
-function applyDisplay(v){
-  const h1 = document.querySelector('.hero h1');
-  if(!h1) return;
-  h1.style.fontStyle = (v==='italic') ? 'italic' : 'normal';
-  h1.style.fontFamily = (v==='sans') ? 'var(--sans)' : 'var(--serif)';
-  h1.style.letterSpacing = (v==='sans') ? '-0.04em' : '-0.02em';
-  h1.style.textTransform = (v==='sans') ? 'lowercase' : 'none';
-  h1.style.fontWeight = (v==='sans') ? '500' : '400';
+function applyTheme(){
+  let themeKey = state.theme;
+  if(themeKey === 'auto'){ themeKey = resolveDark() ? 'blood' : 'paper'; }
+  const theme = THEMES[themeKey] || THEMES.paper;
+  const dark = resolveDark();
+  const p = dark ? theme.dark : theme.light;
+  const r = document.documentElement.style;
+  r.setProperty('--paper', p.paper);
+  r.setProperty('--paper-2', p.paper2);
+  r.setProperty('--paper-3', p.paper3);
+  r.setProperty('--ink', p.ink);
+  r.setProperty('--ink-2', p.ink2);
+  r.setProperty('--ink-3', p.ink3);
+  r.setProperty('--rule', p.rule);
+  r.setProperty('--rule-strong', p.ruleStrong);
+  r.setProperty('--accent', p.accent);
+  // soft = accent with 14% alpha
+  r.setProperty('--accent-soft', p.accent.replace('oklch(','oklch(').replace(')',' / 0.14)'));
+  // also colour-scheme for native controls
+  r.setProperty('color-scheme', dark ? 'dark' : 'light');
 }
-function applyMotif(v){
-  document.querySelectorAll('.rule-glyph').forEach(el=> el.style.display = (v==='rule') ? '' : 'none');
-  let net = document.getElementById('motif-network');
-  if(v==='network'){
-    if(!net){
-      net = document.createElement('div');
-      net.id = 'motif-network';
-      net.style.cssText = 'grid-column:1 / -1; margin-top:8px; display:flex; justify-content:flex-start;';
-      net.innerHTML = networkSVG();
-      const rule = document.querySelector('.hero-rule');
-      if(rule && rule.parentNode) rule.parentNode.insertBefore(net, rule);
-    } else net.style.display = '';
-  } else if(net){ net.style.display = 'none'; }
-}
-function networkSVG(){
-  return `<svg viewBox="0 0 360 90" width="360" height="90" style="max-width:100%;" aria-hidden="true">
-    <g fill="none" stroke="var(--ink)" stroke-width="1">
-      <line x1="20" y1="60" x2="100" y2="30"/><line x1="100" y1="30" x2="180" y2="60"/>
-      <line x1="180" y1="60" x2="260" y2="30"/><line x1="260" y1="30" x2="340" y2="60"/>
-      <line x1="20" y1="60" x2="180" y2="60"/><line x1="180" y1="60" x2="340" y2="60"/>
-      <line x1="100" y1="30" x2="260" y2="30"/>
-    </g>
-    <g fill="var(--paper)" stroke="var(--ink)" stroke-width="1">
-      <circle cx="20" cy="60" r="5"/><circle cx="180" cy="60" r="5"/><circle cx="340" cy="60" r="5"/>
-      <circle cx="100" cy="30" r="5" fill="var(--accent)"/><circle cx="260" cy="30" r="5" fill="var(--accent)"/>
-    </g>
-  </svg>`;
-}
-function applyDensity(v){
-  document.body.style.setProperty('--section-pad', v==='dense' ? '56px' : '88px');
-  document.querySelectorAll('section').forEach(s=> s.style.padding = `var(--section-pad, 88px) 0`);
-}
+mql.addEventListener && mql.addEventListener('change', ()=>{ if(state.mode==='auto') applyTheme(); });
 
 function renderPanel(){
-  // accent swatches
-  const aw = document.getElementById('tw-accent');
-  aw.innerHTML = '';
-  Object.entries(ACCENTS).forEach(([k,v])=>{
+  // theme swatches
+  const tw = document.getElementById('tw-theme');
+  tw.innerHTML = '';
+  Object.entries(THEMES).forEach(([k,v])=>{
     const b = document.createElement('button');
-    b.className = 'swatch' + (state.accent===k?' active':'');
-    b.style.background = v.swatch;
-    b.title = k;
-    b.onclick = ()=> set('accent', k);
-    aw.appendChild(b);
+    b.className = 'swatch palette' + (state.theme===k?' active':'');
+    b.title = v.name;
+    b.innerHTML = `<span style="background:${v.swatches[0]}"></span><span style="background:${v.swatches[1]}"></span><span style="background:${v.swatches[2]}"></span>`;
+    b.onclick = ()=> setT('theme', k);
+    tw.appendChild(b);
   });
-  ['tw-display','tw-motif','tw-density'].forEach(id=>{
-    const key = id.replace('tw-','');
-    document.querySelectorAll('#'+id+' button').forEach(btn=>{
-      btn.classList.toggle('active', btn.dataset.v === state[key]);
-      btn.onclick = ()=> set(key, btn.dataset.v);
-    });
+  // mode buttons
+  document.querySelectorAll('#tw-mode button').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.v === state.mode);
+    btn.onclick = ()=> setT('mode', btn.dataset.v);
   });
 }
-function set(k, v){
+function setT(k, v){
   state[k] = v;
-  applyAll();
+  applyTheme();
   renderPanel();
   try{ window.parent.postMessage({type:'__edit_mode_set_keys', edits:{[k]:v}}, '*'); }catch(e){}
-}
-function applyAll(){
-  applyAccent(state.accent);
-  applyDisplay(state.display);
-  applyMotif(state.motif);
-  applyDensity(state.density);
 }
 
 const panel = document.getElementById('tweaks-panel');
@@ -1130,7 +1126,22 @@ document.getElementById('tw-close').onclick = ()=>{
   try{ window.parent.postMessage({type:'__edit_mode_dismissed'}, '*'); }catch(e){}
 };
 try{ window.parent.postMessage({type:'__edit_mode_available'}, '*'); }catch(e){}
-applyAll();
+applyTheme();
+renderPanel();
+
+// ===== top-bar day/night quick toggle =====
+(function(){
+  const btn = document.getElementById('mode-toggle');
+  if(!btn) return;
+  const syncBtn = ()=>{ btn.dataset.mode = state.mode; btn.dataset.resolved = resolveDark() ? 'dark' : 'light'; };
+  syncBtn();
+  btn.addEventListener('click', ()=>{
+    const next = state.mode === 'light' ? 'dark' : state.mode === 'dark' ? 'auto' : 'light';
+    setT('mode', next);
+    syncBtn();
+  });
+  mql.addEventListener && mql.addEventListener('change', syncBtn);
+})();
 </script>
 </body>
 </html>
