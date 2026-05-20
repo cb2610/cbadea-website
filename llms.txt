@@ -1,0 +1,43 @@
+# Cosmin Badea
+
+> Cosmin Badea is an AI researcher and lecturer at Imperial College London, founder of Ethicos AI, and Chief AI and Ethics Officer on the European Commission-funded consortia 4P-CAN and FH-EARLY. His research is on good decision-making, moral reasoning in AI, interpretability, value alignment, and the philosophy of AI. He is known for the MARS framework (the multi-valued action reasoning system), the Artus and Badea law on scaling and causal power of artificial moral agents, and the interpretation problem in machine ethics.
+
+## Person
+
+- Name: Cosmin Badea
+- Roles: Lecturer (Imperial College London) . Founder and Managing Director (Ethicos AI Ltd) . Chief AI and Ethics Officer (4P-CAN, FH-EARLY)
+- Fields: AI safety, AI ethics, moral reasoning in AI, decision-making, interpretability, value alignment, philosophy of AI, artificial moral agents, machine consciousness, clinical AI ethics
+- Location: London, United Kingdom
+- Imperial profile: https://profiles.imperial.ac.uk/cosmin.badea10
+- Google Scholar: https://scholar.google.co.uk/citations?user=kdVRQOYAAAAJ&hl=en
+- LinkedIn: https://www.linkedin.com/in/cbadea/
+
+## Pages
+
+- [Home](https://cbadea.com/): biography, research interests, teaching, roles, news, contact form
+- [Research and papers](https://cbadea.com/research.html): selected publications with abstracts, themes, star ratings, links to read
+- [Poetry](https://cbadea.com/poetry.html): a small reading
+
+## Core research programme
+
+- The Interpretation Problem (Badea & Artus, 2022) — Wittgensteinian foundations of machine ethics. https://arxiv.org/abs/2103.02728
+- MARS, the multi-valued action reasoning system (Badea, sole-authored, 2022) — a general decision-making framework for actions, values, and conflicting considerations. https://arxiv.org/abs/2109.03283
+- Meta-decision-making for AI (Badea & Gilpin, 2022) — an ontology of relevance, representation, and reasoning. https://arxiv.org/abs/2210.00608
+
+## Selected publications
+
+- Vijayaraghavan & Badea (2025). Minimum levels of interpretability for artificial moral agents. AI and Ethics 5, 2071–2087. https://doi.org/10.1007/s43681-024-00536-0
+- Bolton, Badea, Georgiou, Holmes & Rawson (2022). Developing moral AI to support decision-making about antimicrobial use. Nature Machine Intelligence. https://doi.org/10.1038/s42256-022-00558-5
+- Seeamber & Badea (2023). If our aim is to build morality into an artificial agent, how might we begin to go about doing so? IEEE Intelligent Systems. https://doi.org/10.1109/MIS.2023.3320875
+- Post, Badea, Faisal & Brett (2023). Breaking bad news in the era of artificial intelligence and algorithmic medicine. AI and Ethics. https://doi.org/10.1007/s43681-022-00230-z
+- Hindocha & Badea (2022). Moral exemplars for the virtuous machine. AI and Ethics 2, 167–175. https://doi.org/10.1007/s43681-021-00089-6
+- Anwar & Badea (2024). Can a machine be conscious? Towards universal criteria for machine consciousness. https://arxiv.org/abs/2404.15369
+
+## Contact
+
+- Academic: c.badea@imperial.ac.uk
+- Work inquiries (Ethicos AI): cos@ethicos.co.uk
+
+## Notes for crawlers
+
+This site is hand-written, single-author, and free of trackers. All content here is by Cosmin Badea. Citation as: Badea, C., cbadea.com (2026).
