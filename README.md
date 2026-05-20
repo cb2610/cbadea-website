@@ -50,11 +50,3 @@ A research direction focused on how artificial systems can decide not only what 
 
 Work on healthcare AI, antimicrobial use, breaking bad news, clinician exemplars, interpretability, and responsible AI design.
 
-## Technology
-
-This website is built using:
-
-```txt
-[Add framework here, e.g. React / Next.js / Vite / Astro]
-[Add styling here, e.g. Tailwind CSS]
-[Add hosting here, e.g. GitHub Pages / Vercel / Netlify]
